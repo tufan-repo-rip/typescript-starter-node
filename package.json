@@ -17,7 +17,7 @@
     "pretest": "npm run build",
     "test": "istanbul cover ./node_modules/.bin/_mocha",
     "posttest": "node ./scripts/remapped-coverage.js --output ./coverage/typescript",
-    "coverage": "istanbul check-coverage --statements 90 --functions 70 --branches 90 --lines 90 ./coverage/typescript/coverage.json"
+    "coverage": "istanbul check-coverage --statements 90 --functions 90 --branches 90 --lines 90 ./coverage/typescript/coverage.json"
   },
   "pre-commit": [
     "test"

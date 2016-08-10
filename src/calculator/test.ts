@@ -14,5 +14,9 @@ describe('Calculator', () => {
 			let result: number = subject.add(2, 3);
 			expect(result).to.equal(5);
 		});
+    it('should subtract two numbers', () => {
+			let result: number = subject.subtract(5, 3);
+			expect(result).to.equal(2);
+    })
 	});
 });
