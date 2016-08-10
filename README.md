@@ -28,6 +28,7 @@ potentially expensive mishaps or re-work later in the project life-cycle.
 ## run-scripts
 Since "lean"-ness is a primary goal, npm is used as a build tool.
 The run-scripts used:
+
     clean       : removes all generated directories
     prebuild    : cleans build and runs tslint (for large projects, remove the automatic clean)
     build       : builds the project
