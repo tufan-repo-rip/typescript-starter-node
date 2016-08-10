@@ -5,8 +5,9 @@
   "main": "dist/index.js",
   "scripts": {
     "clean": "rimraf dist build coverage",
-    "prebuild": "npm run clean",
+    "prebuild": "npm run clean && tslint -c tslint.json src/**/*.ts",
     "build": "tsc",
+    "postbuild": "npm run test",
     "build:watch": "tsc -w",
     "build:dist": "tsc -p tsconfig.dist.json",
     "npm-sh": "npm-sh",
@@ -14,7 +15,6 @@
     "check": "npm-check -u",
     "lcheck": "license-checker --csv | grep -v \"MIT.*\\|BSD.*\\|ISC.*\\|WTFPL.*\\|CC-.*\\|Apache.*\"",
     "license-checker": "license-checker --exclude \"MIT, MIT*, MIT/X11, MIT License, BSD, BSD-2-Clause, BSD-3-Clause, BSD*, Apache, Apache-2.0, CC0-1.0, ISC, Public DOmain, WTFPL, (BSD-2-Clause OR MIT OR Apache-2.0), Apache License, Version 2.0, (MIT AND CC-BY-3.0)\"",
-    "pretest": "npm run build",
     "test": "istanbul cover ./node_modules/.bin/_mocha",
     "posttest": "node ./scripts/remapped-coverage.js --output ./coverage/typescript",
     "coverage": "istanbul check-coverage --statements 90 --functions 90 --branches 90 --lines 90 ./coverage/typescript/coverage.json"
@@ -23,7 +23,6 @@
     "test"
   ],
   "pre-push": [
-    "test",
     "coverage",
     "check",
     "secure"
@@ -31,10 +30,11 @@
   "keywords": [
     "TypeScript",
     "starter",
-    "node"
+    "node",
+    "boilerplate"
   ],
   "author": "Shishir Ramam",
-  "license": "ISC",
+  "license": "Apache 2.0",
   "devDependencies": {
     "@types/chai": "^3.4.30",
     "@types/mocha": "^2.2.29",
