@@ -1,6 +1,43 @@
 # typescript-starter-node
 A starter repository for node modules written in TypeScript.
 
+# Usage
+Starter packs serve as quick starting points for a project. They have pre-configured
+tooling and process definitions to help get one started quickly. This package is no
+exception. Just does it for TypeScript projects that are meant to run on node.js.
+
+    mkdir myApp
+    cd myApp
+    git clone https://github.com/sramam/typescript-starter-node
+
+
+Edit package.json and change "name" as appropriate.
+
+    # For *nix systems, this should work
+    app=myApp
+    sed -i 's/\"name\"\s*:\s*\"typescript-starter-node\"/"name": "'"$app"'"/' package.json
+
+
+Once package.json has been properly configured,
+
+    # remove reference to old repo
+    rm -rf .git
+    # initialize a new git repo
+    git init
+    # add all the original files back into the
+    git add . -all
+    git commit -m "Initial commit"
+
+    # now install all the dependencies.
+    npm install
+    npm build
+
+
+At this point, explore ./src for the bare bones example.
+Typically, you'd want to delete it's contents, start over and profit!
+
+
+
 ## Goal
 The goal is to be simple, lean and automated.
 
@@ -27,7 +64,9 @@ potentially expensive mishaps or re-work later in the project life-cycle.
 
 ## run-scripts
 Since "lean"-ness is a primary goal, npm is used as a build tool.
+
 The run-scripts used:
+*aside:* To help with these, we recommend [npm-completion](https://docs.npmjs.com/cli/completion)?
 
     clean       : removes all generated directories
     prebuild    : cleans build and runs tslint (for large projects, remove the automatic clean)
