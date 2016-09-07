@@ -1,31 +1,68 @@
 {
   "name": "typescript-starter-node",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A starter package for typescript projects",
   "main": "dist/index.js",
   "scripts": {
-    "clean": "rimraf dist build coverage",
-    "prebuild": "npm run clean && tslint -c tslint.json src/**/*.ts",
-    "build": "tsc",
-    "postbuild": "npm run test",
-    "build:watch": "tsc -w",
-    "build:dist": "tsc -p tsconfig.dist.json",
-    "npm-sh": "npm-sh",
+    "check-engines": "check-engines",
+    "staged-mods-ok": "git-mods --staged_ok",
+    "no-mods": "git-mods",
+    "clean": "rimraf build coverage",
+    "clean:dist": "rimraf dist",
+    "lint": "tslint -c tslint.json src/**/*.ts",
+    "compile:build": "tsc",
+    "compile:dist": "tsc -p tsconfig.dist.json",
+    "compile:watch": "tsc -w",
+    "sh": "npm-sh",
     "secure": "nsp check",
     "check": "npm-check -u",
     "lcheck": "license-checker --csv | grep -v \"MIT.*\\|BSD.*\\|ISC.*\\|WTFPL.*\\|CC-.*\\|Apache.*\"",
     "license-checker": "license-checker --exclude \"MIT, MIT*, MIT/X11, MIT License, BSD, BSD-2-Clause, BSD-3-Clause, BSD*, Apache, Apache-2.0, CC0-1.0, ISC, Public DOmain, WTFPL, (BSD-2-Clause OR MIT OR Apache-2.0), Apache License, Version 2.0, (MIT AND CC-BY-3.0)\"",
-    "test": "istanbul cover ./node_modules/.bin/_mocha",
-    "posttest": "node ./scripts/remapped-coverage.js --output ./coverage/typescript",
-    "coverage": "istanbul check-coverage --statements 90 --functions 90 --branches 90 --lines 90 ./coverage/typescript/coverage.json"
+    "test-with-cover": "istanbul cover ./node_modules/.bin/_mocha",
+    "test-without-cover": "mocha",
+    "remap-coverage": "node ./scripts/remapped-coverage.js --output ./coverage/typescript",
+    "coverage": "istanbul check-coverage ./coverage/typescript/coverage.json",
+    "build": "run-batch",
+    "build:dist": "run-batch",
+    "build:watch": "cross-env NODE_ENV=production run-batch",
+    "test": "run-batch"
+  },
+  "run-batch": {
+     "build": [
+      "check-engines",
+      "clean",
+      "lint",
+      "compile:build",
+      "test"
+    ],
+    "build:dist": [
+      "check-engines",
+      "clean:dist",
+      "lint",
+      "compile:dist",
+      "test"
+    ],
+    "build:watch": [
+      "check-engines",
+      "compile:watch"
+    ],
+    "test": [
+      "check-engines",
+      "test-with-cover",
+      "remap-coverage"
+    ]
   },
   "pre-commit": [
-    "test"
+    "test",
+    "build:dist",
+    "staged-mods-ok"
   ],
   "pre-push": [
     "coverage",
     "check",
-    "secure"
+    "secure",
+    "test",
+    "no-mods"
   ],
   "keywords": [
     "TypeScript",
@@ -38,8 +75,12 @@
   "devDependencies": {
     "@types/chai": "^3.4.30",
     "@types/mocha": "^2.2.29",
+    "@types/circular-json": "^0.1.29",
+    "@types/node": "^6.0.38",
+    "@types/semver": "^5.3.29",
     "blanket": "^1.2.3",
     "chai": "^3.5.0",
+    "circular-json": "^0.3.1",
     "commander": "^2.9.0",
     "cross-env": "^2.0.0",
     "graceful-fs": "^4.1.5",
@@ -47,6 +88,7 @@
     "licensecheck": "^1.0.0",
     "mocha": "^3.0.1",
     "npm-check": "^5.2.3",
+    "npm-run-batch": "0.0.4",
     "npm-sh": "^1.0.1",
     "nsp": "^2.6.1",
     "nsp-formatter-checkstyle": "^1.0.1",
@@ -58,12 +100,18 @@
     "shelljs-nodecli": "^0.1.1",
     "ts-node": "^1.2.2",
     "tslint": "^3.14.0",
-    "typescript": "^2.1.0-dev.20160808"
+    "typescript": "^2.1.0-dev.20160827"
   },
-  "dependencies": {},
+  "dependencies": {
+    "check-engines": "^1.2.0",
+    "semver": "^5.3.0"
+  },
   "standard": {
     "env": [
       "mocha"
     ]
+  },
+  "engines": {
+    "node": ">=6.0.0"
   }
 }

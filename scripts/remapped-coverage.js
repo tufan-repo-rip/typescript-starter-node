@@ -7,17 +7,16 @@ var path = require('path')
 program
   .option('-i, --input <dir>', 'Location of istanbul coverage metrics', './coverage/coverage.json')
   .option('-o, --output <dir>', 'Location of remapped coverage metrics', './coverage/typescript')
-  .option('-s, --statements <number>', 'statement coverage threshold', 90)
-  .option('-b, --branches <number>', 'branch coverage threshold', 90)
-  .option('-f, --functions <number>', 'function coverage threshold', 90)
-  .option('-l, --lines <number>', 'line coverage threshold', 90)
+  .option('-x, --exclude <pattern>', 'file patterns to exclude from remapping and reporting')
   .parse(process.argv)
 
 
 // load the coverage metrics from istanbul run
 var cov = remapper.loadCoverage(program.input)
 // use source-maps to remap the coverage metrics to typescript
-var collector = remapper.remap(cov)
+var collector = remapper.remap(cov, {
+  exclude: program.exclude || null
+})
 // generate an jsonhtml report
 var json_ofile = path.join(program.output, 'coverage.json')
 remapper
@@ -35,10 +34,6 @@ remapper
             console.log('=============================================================================')
             cli.exec('istanbul',
               'check-coverage',
-              '--statements ' + program.statements,
-              '--branches ' + program.branches,
-              '--functions ' + program.functions,
-              '--lines ' + program.lines,
               json_ofile,
               function(code, output) {
                 var o = path.resolve(path.join(program.output, 'index.html'))

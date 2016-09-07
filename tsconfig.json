@@ -2,13 +2,16 @@
     "compilerOptions": {
         "module": "commonjs",
         "target": "es6",
+        "declaration": true,
         "noImplicitAny": false,
+        "rootDirs": ["src", "node_modules"],
+        "typeRoots": ["node_modules/@types"],
         "sourceMap": true,
-		    "rootDir": "./src",
-		    "outDir": "./build"
+        "rootDir": "src",
+        "outDir": "build"
     },
     "exclude": [
         "node_modules",
-        "test"
+        "dist"
     ]
 }
