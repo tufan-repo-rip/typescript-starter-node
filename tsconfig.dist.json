@@ -4,9 +4,10 @@
         "target": "es6",
         "declaration": true,
         "noImplicitAny": false,
-        "sourceMap": true,
-		    "rootDir": "./src",
-		    "outDir": "./dist"
+        "sourceMap": false,
+        "rootDir": "./src",
+        "removeComments": true,
+        "outDir": "./dist"
     },
     "exclude": [
         "node_modules",

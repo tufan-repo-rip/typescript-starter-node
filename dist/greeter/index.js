@@ -9,4 +9,3 @@ class Greeter {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Greeter;
-//# sourceMappingURL=index.js.map

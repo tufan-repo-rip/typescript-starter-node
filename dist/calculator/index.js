@@ -9,4 +9,3 @@ class Calculator {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Calculator;
-//# sourceMappingURL=index.js.map
