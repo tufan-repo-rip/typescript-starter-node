@@ -3,5 +3,6 @@
     // since vscode uses a different version of typescript than we do in this project.
     // https://github.com/Microsoft/TypeScript/issues/9539
     "typescript.tsdk": "./node_modules/typescript/lib",
-    "npm.runInTerminal": false
+    "npm.runInTerminal": false,
+    "editor.rulers": [80, 120]
 }
