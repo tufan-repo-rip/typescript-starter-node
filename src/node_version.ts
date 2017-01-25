@@ -1,13 +1,13 @@
-/// <reference path="../node_modules/@types/node/index.d.ts"/>
+
 import * as semver from 'semver';
+import * as pkg from '../package';
 
 const {version} = process;
 
-export function check() {
+export function check(desired) {
   // Run time validation of engine version
-  if (!semver.satisfies(version, '>= 6.0.0')) {
-    const msg = `declaratif uses advanced ES6 capabilities (Proxies) which are only
-    available on node 6.0+. Current node version ${version} is not ">= 6.0.0"`;
+  if (!semver.satisfies(version, desired)) {
+    const msg = `${pkg.name} requires node ${desired}. Current node version == ${version}. Aborting.`;
     throw(new Error(msg));
   }
 }
