@@ -1,13 +1,13 @@
 
-
 import * as semver from 'semver';
 const pkg = require('../package');
-const {version} = process;
+const _version = process.version;
 
-export function check(desired = version) {
+export const version = ((desired = (pkg.engines.node || _version)) => {
   // Run time validation of engine version
   if (!semver.satisfies(version, desired)) {
-    const msg = `${pkg.name} requires node ${desired}. Current node version == ${version}. Aborting.`;
+    const msg = `${pkg.name} requires node version ${desired}. Currently running an unsatisfactory ${version}. Aborting.`;
     throw(new Error(msg));
   }
-}
+  return version;
+})();
