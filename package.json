@@ -44,7 +44,7 @@
     "pkg-ok": "pkg-ok",
     "precommit": "run-batch",
     "prepush": "run-batch",
-    "postinstall": "node ./scripts/post-install.js"
+    "postinstall": "node ./scripts/postinstall.js"
   },
   "run-batch": {
     "build": [
