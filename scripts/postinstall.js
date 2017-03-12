@@ -20,7 +20,7 @@ const repo = {
 
 if (pkg.name !== repo.name) {
   console.log(
-    chalk.inverse.bold(
+    chalk.bold.black.bgYellow(
       `CHECK PACKAGE NAME: 'package.json:${pkg.name}' !== 'repository name: ${repo.name}'`
     ));
 }
@@ -33,7 +33,8 @@ const url = {
 if (url.pkg !== url.repo) {
   console.log(
     chalk.red.bold(
-      `Repository name mismatch. 'package.json:${pkg.repository.url}' !== 'git config: ${config.remote.origin.url}'`
+      `Repository name mismatch. 'package.json: ${pkg.repository.url}' !== 'git config: ${config.remote.origin.url}'`
     )
-  )
+  );
+  process.exit(-1);
 }

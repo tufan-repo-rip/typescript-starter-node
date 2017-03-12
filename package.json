@@ -73,7 +73,7 @@
     ],
     "precommit": [
       "postinstall",
-      "build:dist",
+      "build",
       "staged-mods-ok"
     ],
     "prepush": [

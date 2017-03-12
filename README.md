@@ -23,7 +23,6 @@ Edit package.json and change "name" as appropriate.
     app=myApp
     sed -i 's/\"name\"\s*:\s*\"typescript-starter-node\"/"name": "'"$app"'"/' package.json
 
-
 Once package.json has been properly configured,
 
     # remove reference to old repo
@@ -38,11 +37,8 @@ Once package.json has been properly configured,
     npm install
     npm build
 
-
 At this point, explore ./src for the bare bones example.
 Typically, you'd want to delete it's contents, start over and profit!
-
-
 
 ## Goal
 The goal is to be simple, lean and automated.
