@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 class Calculator {
     add(x, y) {
         return x + y;
@@ -7,5 +8,4 @@ class Calculator {
         return x - y;
     }
 }
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Calculator;

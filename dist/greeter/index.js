@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 class Greeter {
     constructor(message) {
         this.greeting = message;
@@ -7,5 +8,4 @@ class Greeter {
         return this.greeting;
     }
 }
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Greeter;

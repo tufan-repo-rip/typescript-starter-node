@@ -1,14 +1,25 @@
 {
   "name": "typescript-starter-node",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A starter package for typescript projects",
+  "keywords": [
+    "TypeScript",
+    "starter",
+    "node",
+    "boilerplate"
+  ],
+  "author": "Shishir Ramam",
+  "license": "Apache-2.0",
+  "private": false,
+  "engines": {
+    "node": ">=6.0.0"
+  },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "check-engines": "check-engines",
     "staged-mods-ok": "git-mods --staged_ok",
     "no-mods": "git-mods",
     "clean": "rimraf build coverage",
@@ -19,7 +30,7 @@
     "compile:watch": "tsc -w",
     "sh": "npm-sh",
     "secure": "nsp check",
-    "check": "npm-check -u",
+    "check": "npm-check",
     "test-with-cover": "istanbul cover ./node_modules/.bin/_mocha",
     "test-without-cover": "mocha",
     "remap-coverage:dist": "node ./scripts/remapped-coverage.js --force_min_cover true --output ./coverage/typescript",
@@ -29,73 +40,66 @@
     "build:dist": "run-batch",
     "build:watch": "cross-env NODE_ENV=production run-batch",
     "test": "run-batch",
-    "test:dist": "run-batch"
+    "test:dist": "run-batch",
+    "pkg-ok": "pkg-ok",
+    "precommit": "run-batch",
+    "prepush": "run-batch",
+    "postinstall": "node ./scripts/post-install.js"
   },
   "run-batch": {
     "build": [
-      "check-engines",
       "clean",
+      "pkg-ok",
       "lint",
       "compile:build",
       "test"
     ],
     "build:watch": [
-      "check-engines",
       "compile:watch"
     ],
     "build:dist": [
-      "check-engines",
       "clean:dist",
       "lint",
       "compile:dist",
       "test:dist"
     ],
     "test:dist": [
-      "check-engines",
       "test-with-cover",
       "remap-coverage:dist"
     ],
     "test": [
-      "check-engines",
       "test-with-cover",
       "remap-coverage"
+    ],
+    "precommit": [
+      "postinstall",
+      "build:dist",
+      "staged-mods-ok"
+    ],
+    "prepush": [
+      "no-mods",
+      "pkg-ok",
+      "build:dist",
+      "check",
+      "secure",
+      "no-mods"
     ]
   },
-  "pre-commit": [
-    "test",
-    "build:dist",
-    "staged-mods-ok"
-  ],
-  "pre-push": [
-    "coverage",
-    "check",
-    "secure",
-    "test",
-    "no-mods"
-  ],
-  "keywords": [
-    "TypeScript",
-    "starter",
-    "node",
-    "boilerplate"
-  ],
-  "author": "Shishir Ramam",
-  "license": "Apache 2.0",
   "devDependencies": {
     "@types/chai": "^3.4.30",
     "@types/circular-json": "^0.1.29",
     "@types/mocha": "^2.2.29",
     "@types/node": "^6.0.38",
     "@types/semver": "^5.3.29",
-    "blanket": "^1.2.3",
     "chai": "^3.5.0",
     "chalk": "^1.1.3",
-    "check-engines": "^1.2.0",
-    "circular-json": "^0.3.1",
     "commander": "^2.9.0",
+    "coveralls": "^2.12.0",
     "cross-env": "^3.1.3",
+    "git-config": "0.0.7",
     "git-mods": "^1.0.0",
-    "graceful-fs": "^4.1.9",
+    "graceful-fs": "^4.1.11",
+    "husky": "^0.13.2",
     "istanbul": "^0.4.4",
     "mocha": "^3.0.1",
     "node-emoji": "^1.4.1",
@@ -105,17 +109,15 @@
     "nsp": "^2.6.1",
     "nsp-formatter-checkstyle": "^1.0.1",
     "nsp-formatter-remarkup": "^1.0.2",
-    "pre-commit": "^1.1.3",
-    "pre-push": "^0.1.1",
-    "remap-istanbul": "^0.7.0",
+    "pkg-ok": "^1.0.1",
+    "remap-istanbul": "^0.9.1",
     "rimraf": "^2.5.4",
     "shelljs-nodecli": "^0.1.1",
-    "ts-node": "^1.2.2",
     "tslint": "^4.0.0-dev.0",
     "typescript": "^2.1.0-dev.20161030"
   },
   "dependencies": {
-    "check-engines": "^1.2.0",
+    "runtime-engine-check": "^1.0.0",
     "semver": "^5.3.0"
   },
   "standard": {
