@@ -1,4 +1,10 @@
 # typescript-starter-node
+<!-- badge -->
+[![npm license](https://img.shields.io/npm/l/typescript-starter-node.svg)](https://www.npmjs.com/package/typescript-starter-node)
+[![travis status](https://img.shields.io/travis/sramam/typescript-starter-node.svg)](https://travis-ci.org/sramam/typescript-starter-node)
+[![Build status](https://ci.appveyor.com/api/projects/status/90am2usst4qeutgi?svg=true)](https://ci.appveyor.com/project/sramam/typescript-starter-node)
+[![Coverage Status](https://coveralls.io/repos/github/sramam/typescript-starter-node/badge.svg?branch=master)](https://coveralls.io/github/sramam/typescript-starter-node?branch=master)
+<!-- endbadge -->
 A starter repository for node modules written in TypeScript.
 
 # Usage
