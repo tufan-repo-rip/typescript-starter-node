@@ -6,6 +6,7 @@
 const pkg = require('../package.json');
 const chalk = require('chalk');
 const gitConfig = require('git-config');
+const path = require('path');
 
 const config = gitConfig.sync();
 const repo = {
