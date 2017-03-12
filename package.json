@@ -58,10 +58,14 @@
       "compile:watch"
     ],
     "build:dist": [
-      "clean:dist",
+      "no-mods",
+      "pkg-ok",
       "lint",
-      "compile:dist",
-      "test:dist"
+      "clean",
+      "compile:build",
+      "test:dist",
+      "clean:dist",
+      "compile:dist"
     ],
     "test:dist": [
       "test-with-cover",
@@ -77,8 +81,6 @@
       "staged-mods-ok"
     ],
     "prepush": [
-      "no-mods",
-      "pkg-ok",
       "build:dist",
       "check",
       "secure",
