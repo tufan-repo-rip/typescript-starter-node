@@ -39,13 +39,13 @@ const pkgRepo = (pkg) => {
         case 1:
           throw new Error(`Unsupportted 'package.json:repository' ${pkg.repository}`)
         case 2:
-          let [service, userid] = parts[0].split(':')
-          const repo = parts[1]
-          if (!userid) {
-            userid = service;
-            service = 'github'
+          const svcid = parts[0].split(':')
+          const prop = {
+            service: svcid.length === 2 ? svcid[0]: 'github',
+            userid: svcid.length === 2 ? svcid[1] : svcid[0],
+            repo: parts[1]
           }
-          return `${svcMap[service]}/${userid}/${repo}`
+          return `${svcMap[prop.service]}/${prop.userid}/${prop.repo}`
         default:
           return pkg.repository
       }
