@@ -25,15 +25,44 @@ if (pkg.name !== repo.name) {
     ));
 }
 
+const pkgRepo = (pkg) => {
+  const type = toString.call(pkg.repository);
+  const svcMap = {
+    github: 'https://github.com',
+    gitlab: 'https://gitlab.com',
+    bitbucket: 'https://bitbucket.org'
+  };
+  switch (type) {
+    case '[object String]':
+      const parts = pkg.repository.split('/');
+      switch (parts.length) {
+        case 1:
+          throw new Error(`Unsupportted 'package.json:repository' ${pkg.repository}`)
+        case 2:
+          let [service, userid] = parts[0].split(':')
+          const repo = parts[1]
+          if (!userid) {
+            userid = service;
+            service = 'github'
+          }
+          return `${svcMap[service]}/${userid}/${repo}`
+        default:
+          return pkg.repository
+      }
+    case '[object Object]':
+      return pkg.repository.url
+  }
+}
+
 const url = {
-  pkg: pkg.repository.url.replace('git+', '').replace('+git', '').replace('.git', ''),
-  repo: config.remote.origin.url.replace('git+', '').replace('+git', '').replace('.git','')
+  pkg: pkgRepo(pkg).replace('git+', '').replace('+git', '').replace('.git', ''),
+  repo: config.remote.origin.url.replace('git+', '').replace('+git', '').replace('.git', '')
 };
 
 if (url.pkg !== url.repo) {
   console.log(
     chalk.red.bold(
-      `Repository name mismatch. 'package.json: ${pkg.repository.url}' !== 'git config: ${config.remote.origin.url}'`
+      `Repository name mismatch. 'package.json: ${pkgRepo(pkg)}' !== 'git config: ${config.remote.origin.url}'`
     )
   );
   process.exit(-1);
