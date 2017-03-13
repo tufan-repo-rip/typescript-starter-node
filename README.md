@@ -4,38 +4,50 @@
 [![travis status](https://img.shields.io/travis/sramam/typescript-starter-node.svg)](https://travis-ci.org/sramam/typescript-starter-node)
 [![Build status](https://ci.appveyor.com/api/projects/status/90am2usst4qeutgi?svg=true)](https://ci.appveyor.com/project/sramam/typescript-starter-node)
 [![Coverage Status](https://coveralls.io/repos/github/sramam/typescript-starter-node/badge.svg?branch=master)](https://coveralls.io/github/sramam/typescript-starter-node?branch=master)
+[![David](https://david-dm.org/sramam/typescript-starter-node/status.svg)](https://david-dm.org/sramam/typescript-starter-node)
+[![David](https://david-dm.org/sramam/typescript-starter-node/dev-status.svg)](https://david-dm.org/sramam/typescript-starter-node?type=dev)
 <!-- endbadge -->
 A starter repository for node modules written in TypeScript.
 
+A simple, full-functionality starter package for node.
+
+Goals:
+- minimize dependencies.
+- use simpler-to-understand dependencies when necessary.
+- enable a move-fast mindset.
+
 # Usage
-Starter packs serve as quick starting points for a project. They have pre-configured
-tooling and process definitions to help get one started quickly. This package is no
-exception. Just does it for TypeScript projects that are meant to run on node.js.
 
-    mkdir myApp
-    cd myApp
-    git clone https://github.com/sramam/typescript-starter-node
-
+```
+mkdir myApp
+cd myApp
+git clone https://github.com/sramam/typescript-starter-node
+```
 
 Edit package.json and change "name" as appropriate.
 
-    # For *nix systems, this should work
-    app=myApp
-    sed -i 's/\"name\"\s*:\s*\"typescript-starter-node\"/"name": "'"$app"'"/' package.json
+```
+# For *nix systems, this should work
+app=myApp
+sed -i 's/\"name\"\s*:\s*\"typescript-starter-node\"/"name": "'"$app"'"/' package.json
+```
 
 Once package.json has been properly configured,
 
-    # remove reference to old repo
-    rm -rf .git
-    # initialize a new git repo
-    git init
-    # add all the original files back into the
-    git add . -all
-    git commit -m "Initial commit"
-
-    # now install all the dependencies.
-    npm install
-    npm build
+```
+# remove reference to old repo
+rm -rf .git
+# initialize a new git repo
+git init
+# add all the original files back into the
+git add . -all
+git commit -m "Initial commit"
+```
+```
+# now install all the dependencies.
+npm install
+npm build
+```
 
 At this point, explore ./src for the bare bones example.
 Typically, you'd want to delete it's contents, start over and profit!
@@ -49,9 +61,8 @@ Support for the following is baked in:
 - [x] build automation
 - [x] [mocha](https://mochajs.org/) test-automation
 - [x] test coverage (remapped to TypeScript)
-- [ ] complexity analysis
 - [x] checks dependencies for known vulnerabilities before commit.
-- [ ] CI integration
+- [x] CI integration
 
 ## DX & minimizing tech-debt
 This package take an opinioned view on the Developer-Experience with an eye towards minimizing tech-debt.
@@ -61,8 +72,7 @@ There are four operations that will be part of a developer experience:
 - `git commit`: a pre-commit hook runs tests with coverage
 - `git push`: a pre-push hook runs coverage-check, checks packages for updates and unpatched vulnerabilities
 
-The process is meant to serve as an early-warning mechanism to catch issues that will cause
-potentially expensive mishaps or re-work later in the project life-cycle.
+The process is meant to serve as an early-warning mechanism to catch issues that will cause potentially expensive mishaps or re-work later in the project life-cycle.
 
 ## run-scripts
 Since "lean"-ness is a primary goal, npm is used as a build tool.
@@ -117,9 +127,8 @@ TypeScript compiler configuration, tsconfig.json does not support multiple build
 
 Further, our opinioned preferences is to keep source and associated tests together in the source tree. This requires to compile time configurations - a regular build that includes
 
-
 ## License
-Apache 2.0
+Apache-2.0
 
 ## Support
 Bugs, PRs, comments, suggestions welcomed!
