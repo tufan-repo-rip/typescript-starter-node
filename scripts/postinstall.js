@@ -55,8 +55,8 @@ const pkgRepo = (pkg) => {
 }
 
 const url = {
-  pkg: pkgRepo(pkg).replace('git+', '').replace('+git', '').replace('.git', ''),
-  repo: config.remote.origin.url.replace('git+', '').replace('+git', '').replace('.git', '')
+  pkg: pkgRepo(pkg).replace('git+', '').replace('+git', '').replace('.git', '').replace(/:\/\/([^@]+@)/, '://'),
+  repo: config.remote.origin.url.replace('git+', '').replace('+git', '').replace('.git', '').replace(/:\/\/([^@]+@)/, '://')
 };
 
 if (url.pkg !== url.repo) {

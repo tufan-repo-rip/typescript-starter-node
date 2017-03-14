@@ -1,6 +1,6 @@
 {
   "name": "typescript-starter-node",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A starter package for typescript projects",
   "keywords": [
     "TypeScript",
@@ -59,7 +59,6 @@
       "compile:watch"
     ],
     "build:dist": [
-      "no-mods",
       "pkg-ok",
       "lint",
       "clean",

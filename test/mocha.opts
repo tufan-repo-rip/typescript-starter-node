@@ -3,5 +3,5 @@
 --ui bdd
 --recursive
 --watch-extensions js
-build/**/*test.js
+build/**/test.js
 build/**/test/specs/**/*.js
