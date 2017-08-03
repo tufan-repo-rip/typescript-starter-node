@@ -50,7 +50,6 @@
   "run-batch": {
     "build": [
       "clean",
-      "pkg-ok",
       "lint",
       "compile:build",
       "test"
@@ -59,13 +58,13 @@
       "compile:watch"
     ],
     "build:dist": [
-      "pkg-ok",
       "lint",
       "clean",
       "compile:build",
       "test:dist",
       "clean:dist",
-      "compile:dist"
+      "compile:dist",
+      "pkg-ok"
     ],
     "test:dist": [
       "test-with-cover",

@@ -58,6 +58,12 @@ function pkgRepo(pkg) {
 }
 
 exports.validate = () => {
+
+  if (!!__dirname.match(/.*node_modules.*/)) {
+    // this is a dependent install, skip validation
+    return;
+  }
+
   const config = gitcfg.keys(gitcfg.sync());
 
   if (!(pkg && pkg.repository)) {
