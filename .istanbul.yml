@@ -17,15 +17,15 @@ instrumentation:
     include-pid: false
     es-modules: false
 reporting:
-    print: summary
+    print: none
     reports:
         - lcov
     dir: ./coverage
     watermarks:
-        statements: [50, 80]
-        lines: [50, 80]
-        functions: [50, 80]
-        branches: [50, 80]
+        statements: [80, 90]
+        lines: [80, 90]
+        functions: [80, 90]
+        branches: [80, 90]
     report-config:
         clover: {file: clover.xml}
         cobertura: {file: cobertura-coverage.xml}
@@ -48,7 +48,7 @@ check:
         functions: 90
         excludes: [
           '**/*test.js',
-          '**/template-parser/index.js'
+          'test/specs/**/*.js'
         ]
     each:
         statements: 90
@@ -57,5 +57,5 @@ check:
         functions: 90
         excludes: [
           '**/*test.js',
-          '**/template-parser/index.js'
+          'test/specs/**/*.js'
         ]
