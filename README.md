@@ -74,7 +74,8 @@ There are four operations that will be part of a developer experience:
 - `git commit`: a pre-commit hook runs tests with coverage
 - `git push`: a pre-push hook runs coverage-check, checks packages for updates and unpatched vulnerabilities
 
-The process is meant to serve as an early-warning mechanism to catch issues that will cause potentially expensive mishaps or re-work later in the project life-cycle.
+The process is meant to serve as an early-warning mechanism to catch issues that will cause potentially
+expensive mishaps or re-work later in the project life-cycle.
 
 ## run-scripts
 Since "lean"-ness is a primary goal, npm is used as a build tool.
@@ -118,19 +119,28 @@ The directory structure of a typical project:
     ├── tsconfig.json
     └── tslint.json
 
-In addition, these directories are auto-created by the various scripts. The coverage & build directories are .gitignored. By design, dist directories are - for pure-Type/JavaScript packages, this is an advantage. If your package included native/compiled artifacts, it might need to be reconsidered.
+In addition, these directories are auto-created by the various scripts. The coverage & build
+directories are .gitignored. By design, dist directories are - for pure-Type/JavaScript packages,
+this is an advantage. If your package included native/compiled artifacts, it might need to be reconsidered.
 
     ├── coverage
     ├── dist
     └── build
 
 ### Why are there two tsconfig*.json files?
-TypeScript compiler configuration, tsconfig.json does not support multiple build targets. To create separate builds then, one has to use multiple config files and invoke atleast one of them explicitly like we do.
+TypeScript compiler configuration, tsconfig.json does not support multiple build targets.
+To create separate builds then, one has to use multiple config files and invoke atleast
+ one of them explicitly like we do.
 
-Further, our opinioned preferences is to keep source and associated tests together in the source tree. This requires to compile time configurations - a regular build that includes
+Further, our opinioned preferences is to keep source and associated tests together in the
+source tree. This requires to compile time configurations - a regular build that includes
 
 ## License
 Apache-2.0
+
+## Code of Conduct
+Please note that this project is released with a [Contributor Code of Conduct](code-of-conduct.md).
+By participating in this project you agree to abide by its terms.
 
 ## Support
 Bugs, PRs, comments, suggestions welcomed!
