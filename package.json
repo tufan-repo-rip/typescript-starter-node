@@ -41,7 +41,7 @@
     "remap-json": "remap-istanbul -i coverage/coverage.json -o coverage/typescript/coverage.json -t json",
     "coverage-report": "istanbul report --include=coverage/typescript/coverage.json text-summary",
     "check-coverage": "istanbul check-coverage --include coverage/typescript/coverage.json",
-    "test-with-cover": "istanbul cover ./node_modules/.bin/_mocha -- --opts mocha.opts",
+    "test-with-cover": "istanbul cover ./node_modules/mocha/bin/_mocha -- --opts mocha.opts",
     "test-without-cover": "mocha --opts mocha.opts",
     "build": "npm-run-batch",
     "build:dist": "run-batch",
