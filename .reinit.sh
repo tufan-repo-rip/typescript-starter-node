@@ -29,6 +29,7 @@ do
   case $result in
     "y")
       rm .reinit.sh
+      break
       ;;
     "n")
       break
