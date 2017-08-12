@@ -12,13 +12,13 @@ appname=${appname:-$app}
 read -p "Email address for code-of-conduct violations? " conduct_email
 
 
-sed -i "s/typescript-starter-node/$appname/" package.json
+sed -i "s/typescript-starter-node/$appname/g" package.json
 echo "updated package.json:name"
-sed -i "s/typescript-starter-node/$appname/" README.md
+sed -i "s/typescript-starter-node/$appname/g" README.md
 echo "updated package name in README.md - please modify the state the purpose of your project"
 if [ -z "$conduct_email" ]
 then
-  sed -i "s/\[REPLACE EMAIL\]/$conduct_email/" code-of-conduct.md
+  sed -i "s/\[REPLACE EMAIL\]/$conduct_email/g" code-of-conduct.md
   echo "email updated in code-of-conduct.md - $conduct_email"
 else
   echo "Please update contact email in code-of-conduct.md"
