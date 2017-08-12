@@ -23,21 +23,17 @@ echo ""
 
 # git commit -m "Big Bang"
 
-echo "Reinitialization of this repo is complete. Destroy .reinit.sh?"
-select result in y n
-do
-  case $result in
-    "y")
-      rm .reinit.sh
-      break
-      ;;
-    "n")
-      break
-      ;;
-    *)
-      ;;
-  esac
-done
+read -p "Reinitialization of this repo is complete. Destroy .reinit.sh? (Y/n): " response
+respose=${response:-y}
+case $response in
+  [yY])
+    rm ./.reinit.sh
+    echo "Deleted ./.reinit.sh"
+    ;;
+  *)
+    echo "Preserving ./.reinit.sh"
+    ;;
+esac
 
 # Now add all remaining files into new repo.
 git add . --all
