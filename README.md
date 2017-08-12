@@ -26,29 +26,13 @@ cd myApp
 git clone https://github.com/sramam/typescript-starter-node
 ```
 
-Edit package.json and change "name" as appropriate.
+Since we are using a git repo as a template, a little reconfiguration is required.
+This has been encapsulated into a simple script - [.reinit.sh](./.reinit.sh).
+The script optionally destroys itself after initialization, allowing a clean start
+for your spanking new project.
 
 ```
-# For *nix systems, this should work
-app=myApp
-sed -i 's/\"name\"\s*:\s*\"typescript-starter-node\"/"name": "'"$app"'"/' package.json
-```
-
-Once package.json has been properly configured,
-
-```
-# remove reference to old repo
-rm -rf .git
-# initialize a new git repo
-git init
-# add all the original files back into the
-git add . -all
-git commit -m "Initial commit"
-```
-```
-# now install all the dependencies.
-npm install
-npm build
+./.reinit.sh
 ```
 
 At this point, explore ./src for the bare bones example.
