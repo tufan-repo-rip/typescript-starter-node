@@ -9,8 +9,20 @@ app=${PWD##*/}
 read -p "Name the project: ($app): " appname
 appname=${appname:-$app}
 
+read -p "Email address for code-of-conduct violations? " conduct_email
+
+
 sed -i "s/typescript-starter-node/$appname/" package.json
+echo "updated package.json:name"
 sed -i "s/typescript-starter-node/$appname/" README.md
+echo "updated package name in README.md - please modify the state the purpose of your project"
+if [ -z "$conduct_email" ]
+then
+  sed -i "s/\[REPLACE EMAIL\]/$conduct_email/" code-of-conduct.md
+  echo "email updated in code-of-conduct.md - $conduct_email"
+else
+  echo "Please update contact email in code-of-conduct.md"
+fi
 
 # reset git repo
 rm -rf .git # remove reference to old repo
@@ -42,5 +54,6 @@ git add . --all
 npm install
 npm run build
 
-# go forth and make a brave new package...
+echo "The repo has been properly reinitialized. It's your turn now."
+echo "Go forth and make a brave new package..."
 
