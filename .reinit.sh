@@ -12,12 +12,6 @@ appname=${appname:-$app}
 sed -i "s/typescript-starter-node/$appname/" package.json
 sed -i "s/typescript-starter-node/$appname/" README.md
 
-# install dependencies and build the bare project.
-npm install
-npm run build
-
-# go forth and make a brave new package...
-
 # reset git repo
 rm -rf .git # remove reference to old repo
 git init # initialize a new git repo
@@ -46,4 +40,10 @@ done
 
 # Now add all remaining files into new repo.
 git add . --all
+
+# install dependencies and build the bare project.
+npm install
+npm run build
+
+# go forth and make a brave new package...
 
