@@ -36,7 +36,7 @@ echo ""
 # git commit -m "Big Bang"
 
 read -p "Reinitialization of this repo is complete. Destroy .reinit.sh? (Y/n): " response
-respose=${response:-y}
+response=${response:-y}
 case $response in
   [yY])
     rm ./.reinit.sh
