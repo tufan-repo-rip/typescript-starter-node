@@ -22,6 +22,7 @@
     "scripts"
   ],
   "scripts": {
+    "commit": "git-cz",
     "staged-mods-ok": "git-mods --staged_ok",
     "no-mods": "git-mods",
     "clean": "rimraf build coverage",
@@ -115,8 +116,10 @@
     "@types/semver": "^5.3.31",
     "chai": "^4.1.1",
     "commander": "^2.9.0",
+    "commitizen": "^2.9.6",
     "coveralls": "^2.12.0",
     "cross-env": "^5.0.4",
+    "cz-conventional-changelog": "^2.0.0",
     "git-mods": "^1.0.7",
     "graceful-fs": "^4.1.11",
     "husky": "^0.14.3",
@@ -145,5 +148,10 @@
     "env": [
       "mocha"
     ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

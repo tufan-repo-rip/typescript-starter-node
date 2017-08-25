@@ -6,6 +6,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/sramam/typescript-starter-node/badge.svg?branch=master)](https://coveralls.io/github/sramam/typescript-starter-node?branch=master)
 [![David](https://david-dm.org/sramam/typescript-starter-node/status.svg)](https://david-dm.org/sramam/typescript-starter-node)
 [![David](https://david-dm.org/sramam/typescript-starter-node/dev-status.svg)](https://david-dm.org/sramam/typescript-starter-node?type=dev)
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 <br/>
 [![NPM](https://nodei.co/npm/typescript-starter-node.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/typescript-starter-node/)
 <!-- endbadge -->
