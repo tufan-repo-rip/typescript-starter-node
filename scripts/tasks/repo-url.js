@@ -72,7 +72,10 @@ exports.validate = () => {
         `WARNING: git remote url is not configured`
       )
     );
-    return;
+    config = config || {};
+    config.remote = config.remote || {};
+    config.remote.origin = config.remote.origin || {};
+    config.remote.origin.url = config.remote.origin.url || '';
   }
 
   if (!(pkg && pkg.repository)) {
@@ -81,7 +84,8 @@ exports.validate = () => {
         `WARNING: 'package.json:repository' is not set.`
       )
     );
-    return;
+    pkg = pkg || {};
+    pkg.repository = pkg.repository || '';
   }
 
   pkg_url = pkgRepo(pkg);

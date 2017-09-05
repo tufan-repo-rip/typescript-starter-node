@@ -7,11 +7,12 @@ if (!__dirname.match(/.*node_modules.*/)) {
   const fname = 'code-of-conduct.md'
   const conduct = fs.readFileSync(fname, 'utf8');
   if (conduct.match(/\[REPLACE EMAIL\]/)) {
-    console.log(`\n`);
-    console.log(`-----------------------------------------------------`);
-    console.log(`  Please modify email address in ${fname}            `);
-    console.log(`-----------------------------------------------------`);
-    console.log(`\n`);
+    console.log(
+      chalk.red.bold(
+        `ERROR: Please '[REPLACE EMAIL]' in ${fname}`
+      )
+    );
+    process.exit(-1);
   }
 }
 
