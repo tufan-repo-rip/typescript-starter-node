@@ -66,44 +66,31 @@ exports.validate = () => {
 
   const config = gitcfg.keys(gitcfg.sync());
 
-  if (!(pkg && pkg.repository)) {
-    console.log(
-      chalk.red(
-        `'package.json:repository' is not set.`
-      )
-    );
-    process.exit(-1);
-  }
-
   if (!(config && config.remote && config.remote.origin && config.remote.origin.url)) {
     console.log(
-      chalk.red(
-        `git remote url is not configured`
+      chalk.yellow(
+        `WARNING: git remote url is not configured`
       )
     );
-    process.exit(-1);
+    return;
   }
 
-  const repo = {
-    name: path.parse(config.remote.origin.url || '').name
-  };
-
-  if (pkg.name !== repo.name) {
+  if (!(pkg && pkg.repository)) {
     console.log(
-      chalk.bold.black.bgYellow(
-        `CHECK PACKAGE NAME: 'package.json:${pkg.name}' !== 'repository name: ${repo.name}'`
-      ));
+      chalk.yellow(
+        `WARNING: 'package.json:repository' is not set.`
+      )
+    );
+    return;
   }
 
-  const url = {
-    pkg: sanitizeGitUrl(pkgRepo(pkg)),
-    repo: sanitizeGitUrl(config.remote.origin.url)
-  };
+  pkg_url = pkgRepo(pkg);
+  repo_url = config.remote.origin.url;
 
-  if (url.pkg !== url.repo) {
+  if (sanitizeGitUrl(pkg_url) !== sanitizeGitUrl(repo_url)) {
     console.log(
       chalk.red.bold(
-        `Repository name mismatch. 'package.json: ${pkgRepo(pkg)}' !== 'git config: ${config.remote.origin.url}'`
+        `ERROR: git url mismatch. 'package.json: ${pkg_url}' !== 'git config: ${repo_url}'`
       )
     );
     process.exit(-1);
