@@ -1,6 +1,7 @@
 
 const repoUrl = require('./tasks/repo-url')
 const fs = require('fs');
+const chalk = require('chalk');
 
 if (!__dirname.match(/.*node_modules.*/)) {
   repoUrl.validate();
