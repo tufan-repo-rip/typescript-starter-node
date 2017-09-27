@@ -29,6 +29,9 @@ function sanitizeGitUrl(url) {
 }
 
 function pkgRepo(pkg) {
+  if (pkg.repository === '') {
+    return '';
+  }
   const type = toString.call(pkg.repository);
   const svcMap = {
     github: 'https://github.com',
@@ -40,7 +43,7 @@ function pkgRepo(pkg) {
       const parts = pkg.repository.split('/');
       switch (parts.length) {
         case 1:
-          throw new Error(`Unsupportted 'package.json:repository' ${pkg.repository}`)
+          throw new Error(`Unsupported 'package.json:repository' ${pkg.repository}`)
         case 2:
           const svcid = parts[0].split(':')
           const prop = {
@@ -64,7 +67,7 @@ exports.validate = () => {
     return;
   }
 
-  const config = gitcfg.keys(gitcfg.sync());
+  const config = gitcfg.keys(gitcfg.sync()) || {};
 
   if (!(config && config.remote && config.remote.origin && config.remote.origin.url)) {
     console.log(
@@ -72,7 +75,6 @@ exports.validate = () => {
         `WARNING: git remote url is not configured`
       )
     );
-    config = config || {};
     config.remote = config.remote || {};
     config.remote.origin = config.remote.origin || {};
     config.remote.origin.url = config.remote.origin.url || '';
@@ -81,10 +83,9 @@ exports.validate = () => {
   if (!(pkg && pkg.repository)) {
     console.log(
       chalk.yellow(
-        `WARNING: 'package.json:repository' is not set.`
+        `WARNING: package.json:repository is not configured`
       )
     );
-    pkg = pkg || {};
     pkg.repository = pkg.repository || '';
   }
 
@@ -94,7 +95,7 @@ exports.validate = () => {
   if (sanitizeGitUrl(pkg_url) !== sanitizeGitUrl(repo_url)) {
     console.log(
       chalk.red.bold(
-        `ERROR: git url mismatch. 'package.json: ${pkg_url}' !== 'git config: ${repo_url}'`
+        `ERROR: git url mismatch. package.json:'${pkg_url}' !== git config:'${repo_url}'`
       )
     );
     process.exit(-1);

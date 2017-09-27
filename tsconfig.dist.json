@@ -9,11 +9,12 @@
         "sourceMap": false,
         "rootDir": "src",
         "removeComments": true,
-        "outDir": "./dist"
+        "outDir": "dist"
     },
     "exclude": [
         "node_modules",
         "build",
+        "dist",
         "./src/**/*test.ts",
         "./src/**/test/*"
     ]
