@@ -98,6 +98,5 @@ exports.validate = () => {
         `ERROR: git url mismatch. package.json:'${pkg_url}' !== git config:'${repo_url}'`
       )
     );
-    process.exit(-1);
   }
 }
