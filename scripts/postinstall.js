@@ -13,7 +13,6 @@ if (!__dirname.match(/.*node_modules.*/)) {
         `ERROR: Please '[REPLACE EMAIL]' in ${fname}`
       )
     );
-    process.exit(-1);
   }
 }
 
