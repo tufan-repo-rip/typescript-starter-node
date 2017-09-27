@@ -138,7 +138,7 @@
     "typescript": "^2.2.1"
   },
   "dependencies": {
-    "chalk": "^2.0.1",
+    "chalk": "^2.1.0",
     "parse-git-config": "^1.1.1",
     "runtime-engine-check": "^1.0.0",
     "semver": "^5.3.0"
