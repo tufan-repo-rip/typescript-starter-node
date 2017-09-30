@@ -38,7 +38,7 @@ git clone https://github.com/sramam/typescript-starter-node
 
 Since we are using a git repo as a template, a little reconfiguration is required.
 This has been encapsulated into a simple node script - [.reinit](./.reinit).
-The script destroys itself after execution, creating a clean start for your spanking new project.
+The script destroys itself after execution, giving you spanking new project a clean start.
 
 ```
 node ./.reinit
