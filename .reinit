@@ -1,0 +1,107 @@
+#!/usr/bin/env node
+
+const fs = require('fs');
+const path = require('path');
+const readline = require('readline');
+const cp = require('child_process');
+
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+const app = path.basename(process.cwd());
+
+
+function sed (fname, match_re, replacement) {
+  const content = fs.readFileSync(fname, 'utf8');
+  fs.writeFileSync(fname, content.replace(match_re, replacement), 'utf8');
+}
+
+function rimraf(dir) {
+  // console.log(`deleting ${dir}`);
+  if (dir === '/') return;
+  if (fs.existsSync(dir)) {
+    fs.readdirSync(dir).forEach(function(file, index){
+      var curdir = path.join(dir, file);
+      if (fs.lstatSync(curdir).isDirectory()) { // recurse
+        rimraf(curdir);
+      } else { // delete file
+        fs.unlinkSync(curdir);
+      }
+    });
+    fs.rmdirSync(dir);
+  }
+};
+
+function spawn(cmd, args, opts) {
+  opts = opts || {cwd : process.cwd(), stdio: 'inherit'};
+  console.log([cmd].concat(args).join(' '));
+  return new Promise((resolve, reject) => {
+    const proc = cp.spawn(cmd, args, opts);
+    proc.on('close', code => {
+      code? reject(code) : resolve()
+    });
+  });
+}
+
+const p = new Promise((resolve, reject) => {
+  console.log('---');
+  rl.question(`Name of the project: (${app}): `, (answer) => {
+    resolve(answer || app)
+  });
+}).then(app => {
+  return new Promise((resolve, reject) => {
+    rl.question(
+      `Email address for code-of-conduct violations: `,
+      conduct => {
+        rl.close();
+        console.log('---');
+        resolve({app, conduct});
+      });
+  });
+}).then(result => {
+  const re = {
+    app: new RegExp(`/typescript-starter-node/g`),
+    conduct: new RegExp(`\\[REPLACE EMAIL\\]`)
+  };
+  sed('./package.json', re.app, result.app);
+  sed('./README.md', re.app, result.app);
+  console.log(`repo renamed to ${result.app}`);
+  if (result.conduct) {
+    rl.close();
+    sed('./code-of-conduct.md', re.conduct, result.conduct);
+    console.log('--');
+    console.log(`code-of-conduct contact email set to ${result.conduct}`);
+  } else {
+    console.log(`Please update the contact email in code-of-conduct.md`);
+  }
+  return result;
+}).then(result => {
+  // delete old git repo and initialize a new one.
+  rimraf(path.join(process.cwd(),'.git'));
+}).then(result => {
+  // initialize new git repo
+  return spawn('git', ['init']);
+}).then(() => {
+  fs.unlinkSync(path.join(process.cwd(),'.reinit'));
+  console.log(``)
+  console.log(`git repo has been reset - please configure git username/email, like so`);
+  console.log(``);
+  console.log(`git config user.name \"John Doe\"`);
+  console.log(`git config user.email john@doe.com`);
+  console.log(``);
+}).then(() => {
+  return spawn(`git`, [`add`, `.`, `--all`]);
+}).then(() => {
+  return spawn(`npm`, [`install`]);
+}).then(() => {
+  return spawn(`npm`, [`run`, `build:dist`]);
+}).then(() => {
+  console.log(`---`);
+  console.log(`The repo has been properly re-initialized.`);
+  console.log(`Your turn now! Go forth and make a brave new npm package...`);
+  console.log(`---`);
+}).catch(err => console.error(err));
+
