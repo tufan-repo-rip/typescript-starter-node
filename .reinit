@@ -81,10 +81,12 @@ const p = new Promise((resolve, reject) => {
 }).then(result => {
   // delete old git repo and initialize a new one.
   rimraf(path.join(process.cwd(),'.git'));
+  return result;
 }).then(result => {
   // initialize new git repo
   return spawn('git', ['init']);
-}).then(() => {
+  return result;
+}).then(result => {
   fs.unlinkSync(path.join(process.cwd(),'.reinit'));
   console.log(``)
   console.log(`git repo has been reset - please configure git username/email, like so`);
@@ -92,15 +94,19 @@ const p = new Promise((resolve, reject) => {
   console.log(`git config user.name \"John Doe\"`);
   console.log(`git config user.email john@doe.com`);
   console.log(``);
-}).then(() => {
-  return spawn(`git`, [`add`, `.`, `--all`]);
-}).then(() => {
-  return spawn(`npm`, [`install`]);
-}).then(() => {
-  return spawn(`npm`, [`run`, `build:dist`]);
-}).then(() => {
+  return result;
+}).then(result => {
+  return spawn(`git`, [`add`, `.`, `--all`]).then(() => result);
+}).then(result => {
+  return spawn(`npm`, [`install`]).then(() => result);
+}).then(result => {
+  return spawn(`npm`, [`run`, `build:dist`]).then(() => result);
+}).then(result => {
   console.log(`---`);
   console.log(`The repo has been properly re-initialized.`);
+  if (!result.conduct) {
+    console.log(`Don't forget to change the email address in 'code-of-conduct.md'`);
+  }
   console.log(`Your turn now! Go forth and make a brave new npm package...`);
   console.log(`---`);
 }).catch(err => console.error(err));
