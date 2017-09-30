@@ -46,6 +46,7 @@ function spawn(cmd, args, opts) {
   });
 }
 
+let conduct_email = null;
 const p = new Promise((resolve, reject) => {
   console.log('---');
   rl.question(`Name of the project: (${app}): `, (answer) => {
@@ -57,6 +58,7 @@ const p = new Promise((resolve, reject) => {
       `Email address for code-of-conduct violations: `,
       conduct => {
         rl.close();
+        conduct_email = conduct || null;
         console.log('---');
         resolve({app, conduct});
       });
@@ -104,7 +106,7 @@ const p = new Promise((resolve, reject) => {
 }).then(result => {
   console.log(`---`);
   console.log(`The repo has been properly re-initialized.`);
-  if (!result.conduct) {
+  if (!conduct_email) {
     console.log(`Don't forget to change the email address in 'code-of-conduct.md'`);
   }
   console.log(`Your turn now! Go forth and make a brave new npm package...`);
