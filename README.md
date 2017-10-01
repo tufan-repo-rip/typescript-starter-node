@@ -45,8 +45,7 @@ node ./.reinit
 ```
 
 At this point, explore ./src for the bare bones example.
-Typically, you'd want to delete it's contents, start over and profit!
-
+Typically, you'd want to modify `./src/index.ts` to get started.
 
 ## Development Tooling
 

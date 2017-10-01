@@ -1,6 +1,6 @@
 {
   "name": "typescript-starter-node",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "A starter package for typescript projects",
   "keywords": [
     "TypeScript",
@@ -19,6 +19,7 @@
   "types": "dist/index.d.ts",
   "files": [
     "dist",
+    "docs",
     "scripts"
   ],
   "scripts": {
