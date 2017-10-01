@@ -8,19 +8,20 @@ The goal is to be simple, lean and automated.
 
 Support for the following is baked in:
 
-- [x] [tslint](https://github.com/palantir/tslint)
+- [x] (tslint)[https://github.com/palantir/tslint] integration
 - [x] build automation
-- [x] [mocha](https://mochajs.org/) test-automation
+- [x] (mocha)[https://mochajs.org/] test-automation
 - [x] test coverage (remapped to TypeScript)
 - [x] checks dependencies for known vulnerabilities before commit.
-- [x] CI integration
+- [x] CI integration (Travis/Appveyor included. PRs for others welcomed)
+- [x] (commitizen)[https://www.npmjs.com/package/commitizen] integration
 
 ## DX & minimizing tech-debt
 This package take an opinioned view on the Developer-Experience with an eye towards minimizing tech-debt.
 There are four operations that will be part of a developer experience:
 - `npm build`: cleans, lints, builds and tests with coverage metrics.
 - `npm build:dist`: generates distribution artifacts
-- `git commit`: a pre-commit hook runs tests with coverage
+- `git cz`: formats commit message to ease generation of Changelogs
 - `git push`: a pre-push hook runs coverage-check, checks packages for updates and unpatched vulnerabilities
 
 The process is meant to serve as an early-warning mechanism to catch issues that will cause potentially

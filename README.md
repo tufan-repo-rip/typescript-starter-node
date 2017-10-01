@@ -27,6 +27,7 @@ Support for the following is baked in:
 - [x] test coverage (remapped to TypeScript)
 - [x] checks dependencies for known vulnerabilities before commit.
 - [x] CI integration
+- [x] Code-of-conduct
 
 # Usage
 
@@ -36,15 +37,16 @@ cd myApp
 git clone https://github.com/sramam/typescript-starter-node
 ```
 
-Since we are using a git repo as a template, a little reconfiguration is required.
-This has been encapsulated into a simple node script - [.reinit](./.reinit).
-The script destroys itself after execution, giving you spanking new project a clean start.
+Since we are using a git repo as a template, a little reconfiguration is
+required. This has been encapsulated into a simple node script -
+[.reinit](./.reinit). The script destroys itself after execution, giving
+your spanking new project a clean start.
 
 ```
 node ./.reinit
 ```
 
-At this point, explore ./src for the bare bones example.
+At this point, explore `./src` for the bare bones example.
 Typically, you'd want to modify `./src/index.ts` to get started.
 
 ## Development Tooling
@@ -52,12 +54,14 @@ Typically, you'd want to modify `./src/index.ts` to get started.
 Described [here](./docs/DevTools.md)
 
 ## License
+
 Apache-2.0
 
 ## Code of Conduct
-Please note that this project is released with a [Contributor Code of Conduct](code-of-conduct.md).
-By participating in this project you agree to abide by its terms.
+
+Please note that this project is released with a [Contributor Code of Conduct](code-of-conduct.md). By participating in this project you agree to abide by its terms.
 
 ## Support
+
 Bugs, PRs, comments, suggestions welcomed!
 
