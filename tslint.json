@@ -1,7 +1,6 @@
 {
     "env": {
-        "node": true,
-        "mocha": true
+        "node": true
     },
     "rules": {
         "class-name": true,

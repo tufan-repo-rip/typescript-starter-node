@@ -1,12 +1,14 @@
 {
   "name": "typescript-starter-node",
-  "version": "1.0.3",
+  "version": "2.0.0",
   "description": "A starter package for typescript projects",
   "keywords": [
     "TypeScript",
     "starter",
     "node",
-    "boilerplate"
+    "boilerplate",
+    "ava",
+    "nyc"
   ],
   "author": "Shishir Ramam",
   "repository": "sramam/typescript-starter-node",
@@ -26,10 +28,8 @@
     "commit": "git-cz",
     "staged-mods-ok": "git-mods --staged_ok",
     "no-mods": "git-mods",
-    "clean": "rimraf build coverage",
+    "clean": "rimraf build .nyc_output coverage",
     "clean:dist": "rimraf dist",
-    "clean:ts-cover": "rimraf coverage/typescript",
-    "init:ts-cover": "mkdirp coverage/typescript",
     "lint": "tslint -c tslint.json src/**/*.ts",
     "compile:build": "tsc",
     "compile:dist": "tsc -p tsconfig.dist.json",
@@ -37,20 +37,13 @@
     "sh": "npm-sh",
     "secure": "nsp check",
     "check": "npm outdated",
-    "coverage": "run-batch",
-    "coverage:dist": "run-batch",
-    "remap-html": "remap-istanbul -i coverage/coverage.json -o coverage/typescript -t html",
-    "remap-json": "remap-istanbul -i coverage/coverage.json -o coverage/typescript/coverage.json -t json",
-    "remap-lcov": "remap-istanbul -i coverage/coverage.json -o coverage/typescript/lcov.info -t lcovonly",
-    "coverage-report": "istanbul report --include=coverage/typescript/coverage.json text-summary",
-    "check-coverage": "istanbul check-coverage --include coverage/typescript/coverage.json",
-    "test-with-cover": "istanbul cover ./node_modules/mocha/bin/_mocha -- --opts mocha.opts",
-    "test-without-cover": "mocha --opts mocha.opts",
+    "check-coverage": "nyc check-coverage --lines 95 --functions 95 --branches 95 --statements 95",
+    "coveralls-report": "nyc report --reporter=text-lcov | coveralls",
+    "test-with-cover": "nyc -r html -r text-summary ava",
+    "test-without-cover": "ava",
     "build": "npm-run-batch",
     "build:dist": "run-batch",
     "build:watch": "cross-env NODE_ENV=production run-batch",
-    "test": "run-batch",
-    "test:dist": "run-batch",
     "pkg-ok": "pkg-ok",
     "precommit": "run-batch",
     "prepush": "run-batch",
@@ -61,42 +54,17 @@
       "clean",
       "lint",
       "compile:build",
-      "test"
+      "test-with-cover"
     ],
     "build:watch": [
       "compile:watch"
     ],
     "build:dist": [
-      "lint",
-      "clean",
-      "compile:build",
-      "test:dist",
+      "build",
+      "check-coverage",
       "clean:dist",
       "compile:dist",
       "pkg-ok"
-    ],
-    "test:dist": [
-      "test-with-cover",
-      "coverage:dist"
-    ],
-    "test": [
-      "test-with-cover",
-      "coverage"
-    ],
-    "coverage": [
-      "clean:ts-cover",
-      "init:ts-cover",
-      "remap-html",
-      "remap-json",
-      "coverage-report"
-    ],
-    "coverage:dist": [
-      "clean:ts-cover",
-      "init:ts-cover",
-      "remap-html",
-      "remap-json",
-      "coverage-report",
-      "check-coverage"
     ],
     "precommit": [
       "postinstall",
@@ -110,12 +78,10 @@
     ]
   },
   "devDependencies": {
-    "@types/chai": "^4.0.2",
     "@types/circular-json": "^0.1.30",
-    "@types/mocha": "^2.2.40",
     "@types/node": "^8.0.19",
     "@types/semver": "^5.3.31",
-    "chai": "^4.1.1",
+    "ava": "^0.22.0",
     "commander": "^2.9.0",
     "commitizen": "^2.9.6",
     "coveralls": "^2.12.0",
@@ -124,16 +90,12 @@
     "git-mods": "^1.0.7",
     "graceful-fs": "^4.1.11",
     "husky": "^0.14.3",
-    "istanbul": "^0.4.5",
     "mkdirp": "^0.5.1",
-    "mocha": "^3.2.0",
     "node-emoji": "^1.5.1",
     "npm-run-batch": "0.0.6",
     "nsp": "^2.6.3",
-    "nsp-formatter-checkstyle": "^1.0.1",
-    "nsp-formatter-remarkup": "^1.0.2",
+    "nyc": "^11.2.1",
     "pkg-ok": "^1.0.1",
-    "remap-istanbul": "^0.9.5",
     "rimraf": "^2.6.1",
     "tslint": "^5.5.0",
     "typescript": "^2.2.1"
@@ -144,14 +106,25 @@
     "runtime-engine-check": "^1.0.0",
     "semver": "^5.3.0"
   },
-  "standard": {
-    "env": [
-      "mocha"
-    ]
-  },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "ava": {
+    "files": [
+      "build/**/test.js",
+      "build/**/test/specs/**/*.js"
+    ],
+    "source": [
+      "build/**/*.js"
+    ]
+  },
+  "nyc": {
+    "exclude": [
+      "build/**/test/**/*.*",
+      "build/**/test.js",
+      "dist"
+    ]
   }
 }

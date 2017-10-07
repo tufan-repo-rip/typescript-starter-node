@@ -1,4 +1,5 @@
 # typescript-starter-node
+
 <!-- badge -->
 [![npm license](https://img.shields.io/npm/l/typescript-starter-node.svg)](https://www.npmjs.com/package/typescript-starter-node)
 [![travis status](https://img.shields.io/travis/sramam/typescript-starter-node.svg)](https://travis-ci.org/sramam/typescript-starter-node)
@@ -23,15 +24,15 @@ Support for the following is baked in:
 
 - [x] [tslint](https://github.com/palantir/tslint)
 - [x] build automation
-- [x] [mocha](https://mochajs.org/) test-automation
+- [x] [ava](https://github.com/avajs/ava) test-automation
 - [x] test coverage (remapped to TypeScript)
 - [x] checks dependencies for known vulnerabilities before commit.
 - [x] CI integration
 - [x] Code-of-conduct
 
-# Usage
+## Usage
 
-```
+```bash
 mkdir myApp
 cd myApp
 git clone https://github.com/sramam/typescript-starter-node
@@ -42,7 +43,7 @@ required. This has been encapsulated into a simple node script -
 [.reinit](./.reinit). The script destroys itself after execution, giving
 your spanking new project a clean start.
 
-```
+```bash
 node ./.reinit
 ```
 
@@ -64,4 +65,3 @@ Please note that this project is released with a [Contributor Code of Conduct](c
 ## Support
 
 Bugs, PRs, comments, suggestions welcomed!
-
