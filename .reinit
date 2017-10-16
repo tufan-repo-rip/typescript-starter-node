@@ -65,8 +65,8 @@ const p = new Promise((resolve, reject) => {
   });
 }).then(result => {
   const re = {
-    app: new RegExp(`/typescript-starter-node/g`),
-    conduct: new RegExp(`\\[REPLACE EMAIL\\]`)
+    app: /typescript-starter-node/g,
+    conduct: `[REPLACE EMAIL]`
   };
   sed('./package.json', re.app, result.app);
   sed('./README.md', re.app, result.app);
