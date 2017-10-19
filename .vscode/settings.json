@@ -1,8 +1,11 @@
 // Place your settings in this file to overwrite default and user settings.
 {
-    // since vscode uses a different version of typescript than we do in this project.
-    // https://github.com/Microsoft/TypeScript/issues/9539
-    "typescript.tsdk": "./node_modules/typescript/lib",
-    "npm.runInTerminal": false,
-    "editor.rulers": [80, 120]
+  // since vscode uses a different version of typescript than we do in this project.
+  // https://github.com/Microsoft/TypeScript/issues/9539
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  "npm.runInTerminal": false,
+  "editor.rulers": [80, 120],
+  "markdownlint.config": {
+    "MD029": {"style": "ordered"}
+  }
 }
