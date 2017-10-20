@@ -52,11 +52,12 @@ Typically, you'd want to modify `./src/index.ts` to get started.
 
 ## Development Tooling
 
-Described [here](./docs/DevTools.md)
+- [Development tooling](./docs/DevTools.md)
+- [Changelog](./CHANGELOG.md)
 
 ## License
 
-Apache-2.0
+[Apache-2.0](./LICENSE.md)
 
 ## Code of Conduct
 
