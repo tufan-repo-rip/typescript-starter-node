@@ -2,10 +2,20 @@ language: node_js
 cache:
   directories:
     - ~/.npm
+notifications:
+  email: false
 node_js:
   - '8'
   - '6'
+before_script:
+  - npm prune
 script:
   - npm run prepush
     # get the coverage metrics to coveralls
   - npm run coveralls-report
+after_success:
+  - npm run semantic-release
+branches:
+  except:
+    - /^v\d+\.\d+\.\d+$/
+

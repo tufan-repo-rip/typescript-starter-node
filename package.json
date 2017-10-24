@@ -48,6 +48,7 @@
     "pkg-ok": "pkg-ok",
     "precommit": "run-batch",
     "prepush": "run-batch",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "postinstall": "node ./scripts/postinstall.js"
   },
   "run-batch": {
@@ -68,7 +69,6 @@
       "pkg-ok"
     ],
     "precommit": [
-      "postinstall",
       "build:dist",
       "staged-mods-ok"
     ],
@@ -98,6 +98,7 @@
     "nyc": "^11.2.1",
     "pkg-ok": "^1.0.1",
     "rimraf": "^2.6.1",
+    "semantic-release": "^8.2.0",
     "tslint": "^5.5.0",
     "typescript": "^2.2.1"
   },

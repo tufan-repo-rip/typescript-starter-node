@@ -8,7 +8,8 @@
 [![David](https://david-dm.org/sramam/typescript-starter-node/status.svg)](https://david-dm.org/sramam/typescript-starter-node)
 [![David](https://david-dm.org/sramam/typescript-starter-node/dev-status.svg)](https://david-dm.org/sramam/typescript-starter-node?type=dev)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
-<br/>
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+
 [![NPM](https://nodei.co/npm/typescript-starter-node.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/typescript-starter-node/)
 <!-- endbadge -->
 
@@ -29,6 +30,7 @@ Support for the following is baked in:
 - [x] checks dependencies for known vulnerabilities before commit.
 - [x] CI integration
 - [x] Code-of-conduct
+- [x] Semantic Release
 
 ## Usage
 
