@@ -170,11 +170,11 @@ const p = new Promise((resolve, reject) => {
   console.log(``);
   return result;
 }).then(result => {
-  return spawn(`git`, [`add`, `.`, `--all`]).then(() => result);
-}).then(result => {
   return spawn(`npm`, [`install`]).then(() => result);
 }).then(result => {
   return spawn(`npm`, [`run`, `build:dist`]).then(() => result);
+}).then(result => {
+  return spawn(`git`, [`add`, `.`, `--all`]).then(() => result);
 }).then(result => {
   console.log(`---`);
   console.log(`The repo has been properly re-initialized.`);
