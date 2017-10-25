@@ -170,11 +170,6 @@ const p = new Promise((resolve, reject) => {
   fs.unlinkSync('.reinit');
   fs.unlinkSync('.travis.yml');
   fs.renameSync('_travis.yml', '.travis.yml');
-  console.log(``)
-  console.log(`git repo has been reset - please configure git username/email, like so`);
-  console.log(`    git config user.name \"John Doe\"`);
-  console.log(`    git config user.email john@doe.com`);
-  console.log(``);
   return result;
 }).then(result => {
   return spawn(`npm`, [`install`]).then(() => result);
@@ -184,6 +179,7 @@ const p = new Promise((resolve, reject) => {
   return spawn(`git`, [`add`, `.`, `--all`]).then(() => result);
 }).then(result => {
   const r = result;
+  console.log(r);
   return spawn(`git`, [
     `remote`,
     `add`,
@@ -191,8 +187,12 @@ const p = new Promise((resolve, reject) => {
     `https://${r.githost}.com/${r.org}/${r.app}.git`
   ]).then(() => result);
 }).then(result => {
+  console.log(`TODO: configure git username and email before committing`);
+  console.log(`    git config user.name \"John Doe\"`);
+  console.log(`    git config user.email john@doe.com`);
+  console.log(``);
   console.log(`---`);
   console.log(`The repo has been properly re-initialized.`);
-  console.log(`Your turn. Go forth and make a brave new npm package...`);
+  console.log(`Go forth and make a brave new npm package...`);
   console.log(`---`);
 }).catch(err => console.error(err));
