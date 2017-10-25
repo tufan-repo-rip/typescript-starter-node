@@ -164,8 +164,7 @@ const p = new Promise((resolve, reject) => {
   return result;
 }).then(result => {
   // initialize new git repo
-  return spawn('git', ['init']);
-  return result;
+  return spawn('git', ['init']).then(() => result);
 }).then(result => {
   fs.unlinkSync('.reinit');
   fs.unlinkSync('.travis.yml');
