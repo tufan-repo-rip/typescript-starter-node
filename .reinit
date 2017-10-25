@@ -6,12 +6,12 @@ const readline = require('readline');
 const cp = require('child_process');
 
 
-const processPkgJson = (ctx) => {
+const resetPackageJson = (ctx) => {
   let pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
   delete pkg.scripts.postinstall;
   pkg.name = ctx.app;
   pkg.description = '';
-  pkg.version = '0.0.0-development',
+  pkg.version = (ctx.githost === 'github') ? '0.0.0-development' : '1.0.0';
   pkg.keywords = [];
   pkg.repository = `${ctx.githost}:${ctx.org}/${ctx.app}`;
   fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2), 'utf8');
@@ -26,6 +26,12 @@ const rl = readline.createInterface({
 const app = path.basename(process.cwd());
 const githost = 'github';
 
+// Since this is a meta-script, it's not fair
+// to install dev-dependencies. We have simpler
+// local implementations of necessary npm modules,
+// allowing us to do the needful.
+// Post a first run, this file will be deleted from
+// the cloned repo.
 
 function sed(fname, match_re, replacement) {
   const content = fs.readFileSync(fname, 'utf8');
@@ -134,7 +140,7 @@ const p = new Promise((resolve, reject) => {
     org: /sramam/g,
     conduct: `[REPLACE EMAIL]`
   };
-  processPkgJson(result);
+  resetPackageJson(result);
   // reset changelog.md
   fs.writeFileSync('CHANGELOG.md', '', 'utf8');
   // sed('./package.json', re.app, result.app);
@@ -176,6 +182,14 @@ const p = new Promise((resolve, reject) => {
   return spawn(`npm`, [`run`, `build:dist`]).then(() => result);
 }).then(result => {
   return spawn(`git`, [`add`, `.`, `--all`]).then(() => result);
+}).then(result => {
+  const r = result;
+  return spawn(`git`, [
+    `remote`,
+    `add`,
+    `origin`,
+    `https://${r.githost}.com/${r.org}/${r.app}.git`
+  ]).then(() => result);
 }).then(result => {
   console.log(`---`);
   console.log(`The repo has been properly re-initialized.`);
