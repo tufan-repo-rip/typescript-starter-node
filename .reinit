@@ -178,7 +178,6 @@ const p = new Promise((resolve, reject) => {
   return spawn(`git`, [`add`, `.`, `--all`]).then(() => result);
 }).then(result => {
   const r = result;
-  console.log(r);
   return spawn(`git`, [
     `remote`,
     `add`,
@@ -186,7 +185,9 @@ const p = new Promise((resolve, reject) => {
     `https://${r.githost}.com/${r.org}/${r.app}.git`
   ]).then(() => result);
 }).then(result => {
+  console.log(``);
   console.log(`TODO: configure git username and email before committing`);
+  console.log(``);
   console.log(`    git config user.name \"John Doe\"`);
   console.log(`    git config user.email john@doe.com`);
   console.log(``);
