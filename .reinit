@@ -11,6 +11,7 @@ const processPkgJson = (ctx) => {
   delete pkg.scripts.postinstall;
   pkg.name = ctx.app;
   pkg.description = '';
+  pkg.version = '0.0.0-development',
   pkg.keywords = [];
   pkg.repository = `${ctx.githost}:${ctx.org}/${ctx.app}`;
   fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2), 'utf8');
