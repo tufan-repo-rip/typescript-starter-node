@@ -40,8 +40,8 @@
     "check": "npm outdated",
     "check-coverage": "nyc check-coverage --lines 95 --functions 95 --branches 95 --statements 95",
     "coveralls-report": "nyc report --reporter=text-lcov | coveralls",
-    "test-with-cover": "nyc -r html -r text-summary ava --verbose",
-    "test-without-cover": "ava",
+    "test-with-cover": "cross-env NODE_ENV=test nyc -r html -r text-summary ava --verbose",
+    "test-without-cover": "cross-env NODE_ENV=test ava",
     "build": "npm-run-batch",
     "build:dist": "run-batch",
     "build:watch": "cross-env NODE_ENV=production run-batch",
@@ -107,7 +107,8 @@
     "conventional-changelog-cli": "^1.3.4",
     "parse-git-config": "^1.1.1",
     "runtime-engine-check": "^1.0.0",
-    "semver": "^5.3.0"
+    "semver": "^5.3.0",
+    "winston-cfg": "^1.0.11"
   },
   "config": {
     "commitizen": {
@@ -125,6 +126,7 @@
   },
   "nyc": {
     "exclude": [
+      "config/**/*",
       "build/**/test/**/*.*",
       "build/**/test.js",
       "dist"

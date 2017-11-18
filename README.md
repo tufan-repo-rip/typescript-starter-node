@@ -23,6 +23,8 @@ The goal is to be simple, lean and automated.
 
 Support for the following is baked in:
 
+- [x] application config via [config](https://github.com/lorenwest/node-config)
+- [x] configurable logging via [winston-cfg](https://github.com/sramam/winston-cfg)
 - [x] [tslint](https://github.com/palantir/tslint)
 - [x] build automation
 - [x] [ava](https://github.com/avajs/ava) test-automation

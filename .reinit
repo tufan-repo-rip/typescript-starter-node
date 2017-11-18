@@ -14,6 +14,11 @@ const resetPackageJson = (ctx) => {
   pkg.version = (ctx.githost === 'github') ? '0.0.0-development' : '1.0.0';
   pkg.keywords = [];
   pkg.repository = `${ctx.githost}:${ctx.org}/${ctx.app}`;
+  // remove scripts from distributed files
+  pkg.files = [
+    'dist',
+    'docs'
+  ];
   fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2), 'utf8');
 }
 
