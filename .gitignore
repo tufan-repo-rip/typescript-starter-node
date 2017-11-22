@@ -1,5 +1,10 @@
 build
 
+# ignore temporary files
+.tmp*
+.junk*
+.tufan*
+
 # Logs
 logs
 *.log
