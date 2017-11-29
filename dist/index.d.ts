@@ -1,1 +1,1 @@
-export declare function main(): void;
+export declare function main(defaults: any): Promise<{}>;
