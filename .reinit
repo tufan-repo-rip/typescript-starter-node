@@ -22,14 +22,6 @@ const resetPackageJson = (ctx) => {
   fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2), 'utf8');
 }
 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
-
-// defaults
-const app = path.basename(process.cwd());
-const githost = 'github';
 
 // Since this is a meta-script, it's not fair
 // to install dev-dependencies. We have simpler
@@ -73,131 +65,152 @@ function spawn(cmd, args, opts) {
   });
 }
 
-let result = {};
+if (require.main !== module) {
+  // this file is being included as a library
+  // export the utility functions defined within
+  module.exports = {
+    resetPackageJson,
+    spawn,
+    rimraf,
+    sed
+  }
+} else {
+  // this is the purpose
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  });
 
-const p = new Promise((resolve, reject) => {
-  console.log('---');
-  const askGitHost = () => {
-    rl.question(`git host (gh, bb or gl): `, (answer) => {
-      if (answer) {
-        const git = {
-          gh: 'github',
-          bb: 'bitbucket',
-          gl: 'gitlab',
-          gitlab: 'gitlab',
-          github: 'github',
-          bitbucket: 'bitbucket'
-        }
-        result.githost = git[answer];
-        if (result.githost) {
-          return resolve(result);
-        } else {
-          console.log('must be one of "gh", "bb", "gl"');
-        }
-      }
-      askGitHost(); // loop
-    });
-  };
-  askGitHost();
-}).then(result => {
-  return new Promise((resolve, reject) => {
-    const askGitOrg = () => {
-      rl.question(`git user/org name: `, (answer) => {
+  // defaults
+  const app = path.basename(process.cwd());
+  const githost = 'github';
+
+  let result = {};
+
+  const p = new Promise((resolve, reject) => {
+    console.log('---');
+    const askGitHost = () => {
+      rl.question(`git host (gh, bb or gl): `, (answer) => {
         if (answer) {
-          result.org = answer;
-          return resolve(result);
+          const git = {
+            gh: 'github',
+            bb: 'bitbucket',
+            gl: 'gitlab',
+            gitlab: 'gitlab',
+            github: 'github',
+            bitbucket: 'bitbucket'
+          }
+          result.githost = git[answer];
+          if (result.githost) {
+            return resolve(result);
+          } else {
+            console.log('must be one of "gh", "bb", "gl"');
+          }
         }
-        askGitOrg(); // loop
+        askGitHost(); // loop
       });
     };
-    askGitOrg();
-  });
-}).then(result => {
-  return new Promise((resolve, reject) => {
-    const appName = () => {
-      rl.question(`Name of the project (${app}): `, (answer) => {
-        result.app = answer || app;
-        return resolve(result);
-      });
-    }
-    appName();
-  });
-}).then(result => {
-  return new Promise((resolve, reject) => {
-    const askConductEmail = () => {
-      rl.question(
-        `Email address for code-of-conduct violations: `,
-        conduct => {
-          if (conduct) {
-            result.conduct = conduct;
-            rl.close();
-            console.log('---');
+    askGitHost();
+  }).then(result => {
+    return new Promise((resolve, reject) => {
+      const askGitOrg = () => {
+        rl.question(`git user/org name: `, (answer) => {
+          if (answer) {
+            result.org = answer;
             return resolve(result);
           }
-          askConductEmail();
+          askGitOrg(); // loop
         });
+      };
+      askGitOrg();
+    });
+  }).then(result => {
+    return new Promise((resolve, reject) => {
+      const appName = () => {
+        rl.question(`Name of the project (${app}): `, (answer) => {
+          result.app = answer || app;
+          return resolve(result);
+        });
+      }
+      appName();
+    });
+  }).then(result => {
+    return new Promise((resolve, reject) => {
+      const askConductEmail = () => {
+        rl.question(
+          `Email address for code-of-conduct violations: `,
+          conduct => {
+            if (conduct) {
+              result.conduct = conduct;
+              rl.close();
+              console.log('---');
+              return resolve(result);
+            }
+            askConductEmail();
+          });
+      };
+      askConductEmail();
+    });
+  }).then(result => {
+    const re = {
+      app: /typescript-starter-node/g,
+      org: /sramam/g,
+      conduct: `[REPLACE EMAIL]`
     };
-    askConductEmail();
-  });
-}).then(result => {
-  const re = {
-    app: /typescript-starter-node/g,
-    org: /sramam/g,
-    conduct: `[REPLACE EMAIL]`
-  };
-  resetPackageJson(result);
-  // reset changelog.md
-  fs.writeFileSync('CHANGELOG.md', '', 'utf8');
-  // sed('./package.json', re.app, result.app);
-  const url = `${result.org}/${result.app}`;
-  sed('./README.md', re.app, result.app);
-  sed('./README.md', re.org, result.org);
-  console.log(`project renamed to ${url}`);
-  if (result.conduct) {
-    rl.close();
-    sed('./code-of-conduct.md', re.conduct, result.conduct);
-    console.log('--');
-    console.log(`code-of-conduct contact email set to ${result.conduct}`);
-  } else {
-    console.log(`Please update the contact email in code-of-conduct.md`);
-  }
-  return result;
-}).then(result => {
-  // delete old git repo and initialize a new one.
-  rimraf(path.join(process.cwd(), '.git'));
-  rimraf(path.join(process.cwd(), 'scripts'));
-  return result;
-}).then(result => {
-  // initialize new git repo
-  return spawn('git', ['init']).then(() => result);
-}).then(result => {
-  fs.unlinkSync('.reinit');
-  fs.unlinkSync('.travis.yml');
-  fs.renameSync('_travis.yml', '.travis.yml');
-  return result;
-}).then(result => {
-  return spawn(`npm`, [`install`]).then(() => result);
-}).then(result => {
-  return spawn(`npm`, [`run`, `build:dist`]).then(() => result);
-}).then(result => {
-  return spawn(`git`, [`add`, `.`, `--all`]).then(() => result);
-}).then(result => {
-  const r = result;
-  return spawn(`git`, [
-    `remote`,
-    `add`,
-    `origin`,
-    `https://${r.githost}.com/${r.org}/${r.app}.git`
-  ]).then(() => result);
-}).then(result => {
-  console.log(``);
-  console.log(`TODO: configure git username and email before committing`);
-  console.log(``);
-  console.log(`    git config user.name \"John Doe\"`);
-  console.log(`    git config user.email john@doe.com`);
-  console.log(``);
-  console.log(`---`);
-  console.log(`The repo has been properly re-initialized.`);
-  console.log(`Go forth and make a brave new npm package...`);
-  console.log(`---`);
-}).catch(err => console.error(err));
+    resetPackageJson(result);
+    // reset changelog.md
+    fs.writeFileSync('CHANGELOG.md', '', 'utf8');
+    // sed('./package.json', re.app, result.app);
+    const url = `${result.org}/${result.app}`;
+    sed('./README.md', re.app, result.app);
+    sed('./README.md', re.org, result.org);
+    console.log(`project renamed to ${url}`);
+    if (result.conduct) {
+      rl.close();
+      sed('./code-of-conduct.md', re.conduct, result.conduct);
+      console.log('--');
+      console.log(`code-of-conduct contact email set to ${result.conduct}`);
+    } else {
+      console.log(`Please update the contact email in code-of-conduct.md`);
+    }
+    return result;
+  }).then(result => {
+    // delete old git repo and initialize a new one.
+    rimraf(path.join(process.cwd(), '.git'));
+    rimraf(path.join(process.cwd(), 'scripts'));
+    return result;
+  }).then(result => {
+    // initialize new git repo
+    return spawn('git', ['init']).then(() => result);
+  }).then(result => {
+    fs.unlinkSync('.reinit');
+    fs.unlinkSync('.travis.yml');
+    fs.renameSync('_travis.yml', '.travis.yml');
+    return result;
+  }).then(result => {
+    return spawn(`npm`, [`install`]).then(() => result);
+  }).then(result => {
+    return spawn(`npm`, [`run`, `build:dist`]).then(() => result);
+  }).then(result => {
+    return spawn(`git`, [`add`, `.`, `--all`]).then(() => result);
+  }).then(result => {
+    const r = result;
+    return spawn(`git`, [
+      `remote`,
+      `add`,
+      `origin`,
+      `https://${r.githost}.com/${r.org}/${r.app}.git`
+    ]).then(() => result);
+  }).then(result => {
+    console.log(``);
+    console.log(`TODO: configure git username and email before committing`);
+    console.log(``);
+    console.log(`    git config user.name \"John Doe\"`);
+    console.log(`    git config user.email john@doe.com`);
+    console.log(``);
+    console.log(`---`);
+    console.log(`The repo has been properly re-initialized.`);
+    console.log(`Go forth and make a brave new npm package...`);
+    console.log(`---`);
+  }).catch(err => console.error(err));
+}
