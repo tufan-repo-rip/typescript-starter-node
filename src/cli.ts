@@ -39,6 +39,13 @@ if (require.main === module) {
   const pkg = require('read-pkg').sync();
   const program = require('commander').version(pkg.version);
 
+  /* istanbul ignore next */
+  process.on('unhandledRejection', error => {
+    log.error('unhandledRejection', error.message);
+    log.error(error.stack);
+    process.exitCode = -1;
+  });
+
   addCommand(program, config, log).then(
     async () => {
       program.parse(process.argv);

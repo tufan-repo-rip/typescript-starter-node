@@ -34,6 +34,11 @@ if (require.main === module) {
     const log = require('winston-cfg').winstonCfg();
     const pkg = require('read-pkg').sync();
     const program = require('commander').version(pkg.version);
+    process.on('unhandledRejection', error => {
+        log.error('unhandledRejection', error.message);
+        log.error(error.stack);
+        process.exitCode = -1;
+    });
     exports.addCommand(program, config, log).then(() => __awaiter(this, void 0, void 0, function* () {
         program.parse(process.argv);
     }), err => {
