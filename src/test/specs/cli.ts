@@ -1,6 +1,9 @@
 
 import { test } from 'ava';
-import * as expect from 'node-suspect';
+import * as execa from 'execa';
+import * as stripAnsi from 'strip-ansi';
+import { Interaction, ENTER, UP, DOWN, run as cliInspectRun } from 'cli-inspector';
+
 const pkgDir = require('pkg-dir').sync();
 const pkg = require('read-pkg').sync();
 
@@ -22,26 +25,33 @@ test(`cli -h`, async t => {
     `  Commands:`,
     `    ${cmdName} [options]   a command with magical properties.`
   ];
-  const task = expect
-    .spawn(`node`, [`${pkgDir}/build/cli.js`, `-h`])
-    .wait(`${cmdName} [options]   a command with magical properties.`);
-  await Run(task).then(actual => t.deepEqual(expected, actual));
+  const actual = await execa(`node`, [`${pkgDir}/build/cli.js`, `-h`]);
+  t.deepEqual(expected, actual.stdout.split('\n').filter(l => l !== ''));
 });
 
 test(`cli ${cmdName}`, async t => {
-  const expected = [/info: .*ms/];
-  const task = expect
-    .spawn(`node`, [`${pkgDir}/build/cli.js`, cmdName])
-    .sendEof();
-  await Run(task).then(actual => t.regex(actual[0], expected[0]));
+  // This is an interactive command - starts up inquirer.
+  // While the boiler plate is an empty set of inquirer questions,
+  // this harness provides everything needed to start building
+  // your own interactive prompts and test cases.
+
+  const interactions = <Interaction[]>[{
+    prompt: /.*info.*ms/
+  }];
+  try {
+    const actual = await cliInspectRun(`node ${pkgDir}/build/cli.js ${cmdName}`, interactions);
+    t.pass();
+  } catch (err) {
+    console.log(err);
+    console.log(err.stack);
+    t.fail(err);
+  }
 });
 
 test(`cli ${cmdName} -f`, async t => {
-  const expected = [/info: .*ms/];
-  const task = expect
-    .spawn(`node`, [`${pkgDir}/build/cli.js`, cmdName, '-f'])
-    .sendEof();
-  await Run(task).then(actual => t.regex(actual[0], expected[0]));
+  const actual = await execa(`node`, [`${pkgDir}/build/cli.js`, cmdName, '-f']);
+  const expected = new RegExp(`info: ${cmdName} .*ms`);
+  t.regex(stripAnsi(actual.stdout), expected, stripAnsi(actual.stdout));
 });
 
 test('questions', async t => {
