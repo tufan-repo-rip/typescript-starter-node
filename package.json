@@ -43,7 +43,7 @@
     "check-coverage": "nyc check-coverage --lines 95 --functions 95 --branches 95 --statements 95",
     "coveralls-report": "nyc report --reporter=text-lcov | coveralls",
     "test-with-cover": "cross-env NODE_ENV=test nyc -r html -r text-summary ava --verbose",
-    "test-without-cover": "cross-env NODE_ENV=test ava",
+    "test-without-cover": "cross-env NODE_ENV=test ava --verbose",
     "build": "npm-run-batch",
     "build:dist": "run-batch",
     "qt": "npm-run-batch",
