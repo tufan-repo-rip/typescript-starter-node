@@ -1,5 +1,4 @@
 
-import * as program from 'commander';
 import { Winston } from 'winston';
 import * as inquirer from 'inquirer';
 
@@ -15,14 +14,13 @@ export const addCommand = async (program, config, log: Winston) => {
     .option('-f, --force', 'bypass interactive mode - auto-magic!')
     .action(async (opts: any) => {
       const start = Date.now();
-      const profiler = log.startTimer();
       // either set defaults or fetch values from persistence.
       const defaults = {};
       const answers = !!opts.force
         ? defaults
         : await inquirer.prompt(questions(defaults));
       // now that we have initial values, just invoke function
-      const result = await main(answers);
+      await main(answers);
       log.info(`${cmdName} - ${Date.now() - start}ms`);
     });
 };

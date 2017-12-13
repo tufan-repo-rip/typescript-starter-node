@@ -2,19 +2,13 @@
 import { test } from 'ava';
 import * as execa from 'execa';
 import * as stripAnsi from 'strip-ansi';
-import { Interaction, ENTER, UP, DOWN, run as cliInspectRun } from 'cli-inspector';
+import { Interaction, /*ENTER, UP, DOWN*/ run as cliInspectRun } from 'cli-inspector';
 
 const pkgDir = require('pkg-dir').sync();
-const pkg = require('read-pkg').sync();
+// const pkg = require('read-pkg').sync();
 
 import { questions } from '../../questions';
 import { cmdName } from '../../cli';
-
-
-// promisify expect.run.
-const Run = (task) => new Promise((resolve, reject) => {
-  task.run((err, stdout, exitCode) => err ? reject(err) : resolve(stdout));
-});
 
 test(`cli -h`, async t => {
   const expected = [
@@ -39,7 +33,7 @@ test(`cli ${cmdName}`, async t => {
     prompt: /.*info.*ms/
   }];
   try {
-    const actual = await cliInspectRun(`node ${pkgDir}/build/cli.js ${cmdName}`, interactions);
+    await cliInspectRun(`node ${pkgDir}/build/cli.js ${cmdName}`, interactions);
     t.pass();
   } catch (err) {
     console.log(err);

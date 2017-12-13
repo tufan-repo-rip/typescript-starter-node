@@ -33,7 +33,7 @@
     "no-mods": "git-mods",
     "clean": "rimraf build .nyc_output coverage",
     "clean:dist": "rimraf dist",
-    "lint": "tslint -c tslint.json src/**/*.ts",
+    "lint": "tslint -c tslint.json --project ./tsconfig.json --format stylish",
     "compile:build": "tsc",
     "compile:dist": "tsc -p tsconfig.dist.json",
     "compile:watch": "tsc -w",
@@ -111,7 +111,8 @@
     "semantic-release": "^8.2.0",
     "strip-ansi": "^4.0.0",
     "tslint": "^5.8.0",
-    "typescript": "^2.6.2"
+    "typescript": "^2.6.2",
+    "typestrict": "0.0.6"
   },
   "dependencies": {
     "chalk": "^2.3.0",

@@ -2,8 +2,8 @@
     "env": {
         "node": true
     },
+    "extends": "typestrict",
     "rules": {
-        "class-name": true,
         "comment-format": [
             true,
             "check-space"
@@ -12,29 +12,7 @@
             true,
             "spaces"
         ],
-        "no-duplicate-variable": true,
-        "no-eval": true,
         "no-internal-module": true,
-        "no-trailing-whitespace": true,
-        "no-unsafe-finally": true,
-        "no-var-keyword": true,
-        "one-line": [
-            true,
-            "check-open-brace",
-            "check-whitespace"
-        ],
-        "quotemark": [
-            true,
-            "single"
-        ],
-        "semicolon": [
-            true,
-            "always"
-        ],
-        "triple-equals": [
-            true,
-            "allow-null-check"
-        ],
         "typedef-whitespace": [
             true,
             {
@@ -48,14 +26,6 @@
         "variable-name": [
             true,
             "ban-keywords"
-        ],
-        "whitespace": [
-            true,
-            "check-branch",
-            "check-decl",
-            "check-operator",
-            "check-separator",
-            "check-type"
         ]
     }
 }

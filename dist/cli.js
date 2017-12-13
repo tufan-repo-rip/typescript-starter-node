@@ -19,12 +19,11 @@ exports.addCommand = (program, config, log) => __awaiter(this, void 0, void 0, f
         .option('-f, --force', 'bypass interactive mode - auto-magic!')
         .action((opts) => __awaiter(this, void 0, void 0, function* () {
         const start = Date.now();
-        const profiler = log.startTimer();
         const defaults = {};
         const answers = !!opts.force
             ? defaults
             : yield inquirer.prompt(questions_1.questions(defaults));
-        const result = yield index_1.main(answers);
+        yield index_1.main(answers);
         log.info(`${exports.cmdName} - ${Date.now() - start}ms`);
     }));
 });

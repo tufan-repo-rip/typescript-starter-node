@@ -3,7 +3,7 @@ import { test } from 'ava';
 import { main } from '../..';
 
 test('main', async (t) => {
-  main(null);
+  await main(null);
   t.pass();
 });
 
