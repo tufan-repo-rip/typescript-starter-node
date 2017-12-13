@@ -28,7 +28,7 @@
   "scripts": {
     "commit": "git-cz",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
-    "todos": "leasot --exit-nicely --tags REVIEW ./src/**/*.* ./config/**/*.*",
+    "todos": "leasot --exit-nicely ./src ./config",
     "staged-mods-ok": "git-mods --staged_ok",
     "no-mods": "git-mods",
     "clean": "rimraf build .nyc_output coverage",
@@ -55,10 +55,16 @@
   },
   "run-batch": {
     "build": [
-      ["clean", "clean:dist"],
+      [
+        "clean",
+        "clean:dist"
+      ],
       "lint",
       "compile:build",
-      ["test-with-cover", "compile:dist"],
+      [
+        "test-with-cover",
+        "compile:dist"
+      ],
       "todos"
     ],
     "qt": [
@@ -92,7 +98,7 @@
     "git-mods": "^1.0.7",
     "graceful-fs": "^4.1.11",
     "husky": "^0.14.3",
-    "leasot": "^4.12.0",
+    "leasot": "git+https://github.com/sramam/leasot.git",
     "mkdirp": "^0.5.1",
     "node-emoji": "^1.5.1",
     "npm-run-batch": "0.0.6",
