@@ -45,7 +45,6 @@
     "test-with-cover": "cross-env NODE_ENV=test nyc -r html -r text-summary ava --verbose",
     "test-without-cover": "cross-env NODE_ENV=test ava --verbose",
     "build": "npm-run-batch",
-    "build:dist": "run-batch",
     "qt": "npm-run-batch",
     "build:watch": "cross-env NODE_ENV=production run-batch",
     "pkg-ok": "pkg-ok",
@@ -56,10 +55,10 @@
   },
   "run-batch": {
     "build": [
-      "clean",
+      ["clean", "clean:dist"],
       "lint",
       "compile:build",
-      "test-with-cover",
+      ["test-with-cover", "compile:dist"],
       "todos"
     ],
     "qt": [
@@ -69,19 +68,12 @@
     "build:watch": [
       "compile:watch"
     ],
-    "build:dist": [
-      "build",
-      "check-coverage",
-      "clean:dist",
-      "compile:dist",
-      "pkg-ok"
-    ],
     "precommit": [
-      "build:dist",
+      "check-coverage",
+      "pkg-ok",
       "staged-mods-ok"
     ],
     "prepush": [
-      "build:dist",
       "secure",
       "no-mods"
     ]
