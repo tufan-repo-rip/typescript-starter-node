@@ -85,7 +85,7 @@
     ]
   },
   "devDependencies": {
-    "@types/node": "^8.0.58",
+    "@types/node": "^8.5.1",
     "@types/semver": "^5.3.31",
     "@types/winston": "^2.3.7",
     "ava": "^0.24.0",
@@ -98,7 +98,7 @@
     "git-mods": "^1.0.7",
     "graceful-fs": "^4.1.11",
     "husky": "^0.14.3",
-    "leasot": "git+https://github.com/sramam/leasot.git",
+    "leasot": "^4.13.0",
     "mkdirp": "^0.5.1",
     "node-emoji": "^1.5.1",
     "npm-run-batch": "0.0.6",
@@ -128,6 +128,7 @@
     }
   },
   "ava": {
+    "serial": false,
     "files": [
       "build/**/test.js",
       "build/**/test/specs/**/*.js"
