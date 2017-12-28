@@ -190,7 +190,7 @@ if (require.main !== module) {
   }).then(result => {
     return spawn(`npm`, [`install`]).then(() => result);
   }).then(result => {
-    return spawn(`npm`, [`run`, `build:dist`]).then(() => result);
+    return spawn(`npm`, [`run`, `build`]).then(() => result);
   }).then(result => {
     return spawn(`git`, [`add`, `.`, `--all`]).then(() => result);
   }).then(result => {
