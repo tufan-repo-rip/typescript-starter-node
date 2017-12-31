@@ -12,6 +12,7 @@ before_install:
   # For details, see https://github.com/npm/npm/pull/19054
   - npm install npm@^5.6.0 -g
 script:
+  - npm run build
   - npm run prepush
     # get the coverage metrics to coveralls
   - npm run coveralls-report
