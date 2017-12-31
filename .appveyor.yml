@@ -3,8 +3,8 @@ environment:
   matrix:
     # node.js
     - nodejs_version: "6"
-    - nodejs_version: "7"
     - nodejs_version: "8"
+    - nodejs_version: "9"
 
 init:
   - git config --global core.autocrlf true
@@ -13,6 +13,9 @@ init:
 install:
   # Get the latest stable version of Node.js or io.js
   - ps: Install-Product node $env:nodejs_version
+  # we need npm version > 5.6.0 to not barf on cross-platform optional dependencies.
+  # For details, see https://github.com/npm/npm/pull/19054
+  - appveyor-retry npm install npm@>=5.6.0 -g
   # install modules
   - appveyor-retry npm install
 
