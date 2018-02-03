@@ -7,8 +7,8 @@ import { Interaction, /*ENTER, UP, DOWN*/ run as cliInspectRun } from 'cli-inspe
 const pkgDir = require('pkg-dir').sync();
 // const pkg = require('read-pkg').sync();
 
-import { questions } from '../../questions';
-import { cmdName } from '../../cli';
+import { questions } from '../questions';
+import { cmdName } from '../cli';
 
 test(`cli -h`, async t => {
   const expected = [

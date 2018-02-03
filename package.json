@@ -131,7 +131,7 @@
     "serial": false,
     "files": [
       "build/**/test.js",
-      "build/**/test/specs/**/*.js"
+      "build/**/test/**/*.js"
     ],
     "source": [
       "build/**/*.js"
