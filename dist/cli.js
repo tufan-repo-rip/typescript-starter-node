@@ -30,8 +30,11 @@ exports.addCommand = (program, config, log) => __awaiter(this, void 0, void 0, f
 if (require.main === module) {
     require('runtime-engine-check')();
     const config = require('config');
-    const log = require('winston-cfg').winstonCfg();
+    const winston = require('winston-cfg').winstonCfg();
     const pkg = require('read-pkg').sync();
+    let [org, name] = pkg.name.replace(/@/, '').split('/');
+    name = name || org;
+    const log = winston.loggers.get(org);
     const program = require('commander').version(pkg.version);
     process.on('unhandledRejection', error => {
         log.error('unhandledRejection', error.message);

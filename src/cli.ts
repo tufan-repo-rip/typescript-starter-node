@@ -33,8 +33,11 @@ export const addCommand = async (program, config, log: Winston) => {
 if (require.main === module) {
   require('runtime-engine-check')(); // checks node version matches spec in package.json
   const config = require('config');
-  const log = require('winston-cfg').winstonCfg();
+  const winston = require('winston-cfg').winstonCfg();
   const pkg = require('read-pkg').sync();
+  let [org, name] = pkg.name.replace(/@/, '').split('/');
+  name = name || org;
+  const log = winston.loggers.get(org);
   const program = require('commander').version(pkg.version);
 
   /* istanbul ignore next */
